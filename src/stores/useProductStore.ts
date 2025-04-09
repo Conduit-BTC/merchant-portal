@@ -30,7 +30,7 @@ export const useProductStore = create<ProductState>((set, get) => ({
 
             subscription.on("event", (event: NDKEvent) => {
                 try {
-                    console.log("Received event:", event);
+                    console.log("Received ProductListing event:", event);
                     const rawEvent = event.rawEvent();
                     // Parse the event content and tags
                     const eventId = event.id || rawEvent.id;
