@@ -1,7 +1,9 @@
+import OrderList from "@/components/Orders/OrderList";
+
 const PendingOrdersLayout: React.FC = () => {
     return (
         <section>
-            <h1>Pending Orders</h1>
+            <OrderList listName="Pending Orders" orders={[]} />
         </section>
     )
 }

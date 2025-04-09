@@ -1,7 +1,11 @@
+import OrderList from "@/components/Orders/OrderList";
+import { useOrderStore } from "@/stores/useOrderStore";
+
 const CompletedOrdersLayout: React.FC = () => {
+    const { allOrders } = useOrderStore();
     return (
         <section>
-            <h1>Completed Orders</h1>
+            <OrderList listName="Completed Orders" orders={[...allOrders]} />
         </section>
     )
 }

@@ -1,7 +1,9 @@
+import OrderList from "@/components/Orders/OrderList";
+
 const CancelledOrdersLayout: React.FC = () => {
     return (
         <section>
-            <h1>Cancelled Orders</h1>
+            <OrderList listName="Cancelled Orders" orders={[]} />
         </section>
     )
 }
