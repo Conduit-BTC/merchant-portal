@@ -2,7 +2,7 @@ import "./app.css";
 import ProductsLayout from "./layouts/products/ProductsLayout";
 import LoginLayout from "./layouts/login/LoginLayout";
 import Header from "./components/Header";
-import ShippingOptionsLayout from "./layouts/store/ShippingOptionsLayout";
+import ShippingOptionsLayout from "./layouts/store/shipping/ShippingOptionsLayout";
 import RelayPoolsLayout from "./layouts/store/RelayPoolsLayout";
 import Sidebar from "@/components/Sidebar";
 import MainArea from "./layouts/MainArea";

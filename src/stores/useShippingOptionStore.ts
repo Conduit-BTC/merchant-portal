@@ -24,7 +24,7 @@ export const useShippingOptionStore = create<ShippingOptionState>((set, get) => 
         set({ isLoading: true, error: null });
         try {
             const ndk = await getNdk();
-            const subscription = ndk.subscribe({ kinds: [30406 as NDKKind], authors: [ndk.getUser({}).npub] });
+            const subscription = ndk.subscribe({ kinds: [30406 as NDKKind], authors: [(await ndk.signer!.user()).pubkey] });
 
             subscription.on("event", (event: NDKEvent) => {
                 try {

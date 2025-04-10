@@ -1,7 +1,7 @@
 import { Route, Switch } from "wouter";
 import ProductsLayout from "./products/ProductsLayout";
 import RelayPoolsLayout from "./store/RelayPoolsLayout";
-import ShippingOptionsLayout from "./store/ShippingOptionsLayout";
+import ShippingOptionsLayout from "./store/shipping/ShippingOptionsLayout";
 import ProductEditorLayout from "./products/ProductEditorLayout";
 import StoreProfileLayout from "./store/StoreProfileLayout";
 import CurrencySettingsLayout from "./store/CurrencySettingsLayout";
