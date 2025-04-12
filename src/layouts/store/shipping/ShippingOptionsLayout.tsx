@@ -1,5 +1,5 @@
 import { useShippingOptionStore } from "@/stores/useShippingOptionStore";
-import { ShippingOption } from "nostr-commerce-schema";
+import { ShippingOption, ShippingOptionUtils as SOU } from "nostr-commerce-schema";
 import { useEffect } from "preact/hooks";
 import { Link } from "wouter";
 
@@ -127,10 +127,11 @@ const ShippingOptionsLayout: React.FC = () => {
                 </div>
             )}
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {[...shippingOptions].map((event) => (
+            <div className="">
+                {[...shippingOptions.values()].map((event) => (
                     <ShippingOptionItem
                         event={event}
+                        onEdit={(e: ShippingOption) => { console.log(JSON.stringify(e)) }}
                     />
                 ))}
             </div>
@@ -138,10 +139,15 @@ const ShippingOptionsLayout: React.FC = () => {
     )
 };
 
-const ShippingOptionItem = ({ event }: { event: any }) => {
+const ShippingOptionItem = ({ event, onEdit }: { event: ShippingOption, onEdit: (e: ShippingOption) => void }) => {
     return (
-        <div className='bg-white/50 w-screen p-4 rounded-md'>
-            {JSON.stringify(event)}
+        <div className='w-full p-4 rounded-md border-2 flex justify-between'>
+            <div>
+                <h2>{SOU.getShippingOptionTitle(event)}</h2>
+                <h4>Base Price: {SOU.getShippingOptionPriceAmount(event)} {SOU.getShippingOptionPriceCurrency(event)}</h4>
+                <h4>Countries: {SOU.getShippingOptionCountries(event)}</h4>
+            </div>
+            <button onClick={() => onEdit(event)}>EDIT</button>
         </div>
     )
 }
