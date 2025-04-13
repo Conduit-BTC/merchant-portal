@@ -1,5 +1,7 @@
 import { Route, Switch } from "wouter";
 import ProductsLayout from "./products/ProductsLayout";
+import ProductCreateLayout from "./products/ProductCreateLayout";
+import ProductEditorLayout from "./products/ProductEditorLayout";
 import RelayPoolsLayout from "./store/RelayPoolsLayout";
 import ShippingOptionsLayout from "./store/shipping/ShippingOptionsLayout";
 import ProductEditorLayout from "./products/ProductEditorLayout";
@@ -22,10 +24,9 @@ const MainArea = () => {
                     <Route path="/shipping" component={ShippingOptionsLayout} />
                     <Route path="/checkout" component={CheckoutSettingsLayout} />
                 </Route>
-                <Route path="/products" nest>
-                    <Route path="/" component={ProductsLayout} />
-                    <Route path="/create" component={ProductEditorLayout} />
-                </Route>
+                <Route path="/products/create" component={ProductCreateLayout} />
+                <Route path="/products/edit/:id" component={ProductEditorLayout} />
+                <Route path="/products" component={ProductsLayout} />
                 <Route path="/orders" nest>
                     <Route path="/completed" component={CompletedOrdersLayout} />
                     <Route path="/pending" component={PendingOrdersLayout} />
