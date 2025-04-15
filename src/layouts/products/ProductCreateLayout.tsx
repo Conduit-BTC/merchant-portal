@@ -32,7 +32,7 @@ const ProductCreateLayout: React.FC = () => {
             setProductData(sampleProduct);
         }
     }, [sampleProduct]);
-    
+
 
     const handleFillSample = () => {
         setProductData(sampleProduct);
@@ -76,6 +76,7 @@ const ProductCreateLayout: React.FC = () => {
             </div>
 
             <ProductForm
+                key={productData ? productData.created_at : "new-product-form"}
                 event={productData}
                 onSubmit={handleSubmit}
                 onCancel={handleCancel}

@@ -1,7 +1,8 @@
 import { useShippingOptionStore } from "@/stores/useShippingOptionStore";
-import { ShippingOption, ShippingOptionUtils as SOU } from "nostr-commerce-schema";
+import { ShippingOption } from "nostr-commerce-schema";
 import { useEffect } from "preact/hooks";
-import { Link } from "wouter";
+import CreateShippingOptionButton from "./CreateShippingOptionButton";
+import ShippingOptionItem from "./ShippingOptionItem";
 
 const ShippingOptionsLayout: React.FC = () => {
     const { shippingOptions, isLoading, error, fetchShippingOptions, createShippingOption } = useShippingOptionStore();
@@ -28,26 +29,7 @@ const ShippingOptionsLayout: React.FC = () => {
 
     return (
         <div className="mx-auto px-4 py-8">
-            <Link
-                href={'/store/shipping/create'}
-                className="inline-flex items-center px-4 py-2 mb-2 border border-transparent text-sm font-medium rounded-md shadow-sm  bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-                <svg
-                    className="mr-2 -ml-1 h-5 w-5"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                >
-                    <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                    />
-                </svg>
-                Create Shipping Option
-            </Link>
+            <CreateShippingOptionButton />
             <button
                 onClick={handleCreateSampleClick}
                 className="inline-flex items-center px-4 py-2 mb-2 border border-transparent text-sm font-medium rounded-md shadow-sm  bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
@@ -139,17 +121,5 @@ const ShippingOptionsLayout: React.FC = () => {
     )
 };
 
-const ShippingOptionItem = ({ event, onEdit }: { event: ShippingOption, onEdit: (e: ShippingOption) => void }) => {
-    return (
-        <div className='w-full p-4 rounded-md border-2 flex justify-between'>
-            <div>
-                <h2>{SOU.getShippingOptionTitle(event)}</h2>
-                <h4>Base Price: {SOU.getShippingOptionPriceAmount(event)} {SOU.getShippingOptionPriceCurrency(event)}</h4>
-                <h4>Countries: {SOU.getShippingOptionCountries(event)}</h4>
-            </div>
-            <button onClick={() => onEdit(event)}>EDIT</button>
-        </div>
-    )
-}
 
 export default ShippingOptionsLayout;
