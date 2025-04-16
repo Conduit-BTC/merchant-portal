@@ -1,6 +1,6 @@
 import { getNdk } from "@/services/ndkService";
 import { NDKEvent, NDKKind, NDKTag } from "@nostr-dev-kit/ndk";
-import { ShippingOption, validateShippingOption } from "nostr-commerce-schema";
+import { ProductListing, ShippingOption, validateShippingOption } from "nostr-commerce-schema";
 import { create } from "zustand";
 
 interface ShippingOptionState {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ProductListing, ProductListingUtils } from "nostr-commerce-schema";
+import { ProductListing, ProductListingUtils, ShippingOption } from "nostr-commerce-schema";
 import { useAccountStore } from "@/stores/useAccountStore";
 import DetailsTab from "./DetailsTab";
 import BasicTab from "./BasicTab";
@@ -14,7 +14,7 @@ interface ProductFormProps {
     onCancel: () => void;
 }
 
-interface FormState {
+export interface FormState {
     id: string;
     title: string;
     price: {
@@ -125,6 +125,8 @@ const ProductForm: React.FC<ProductFormProps> = (
                 ProductListingUtils.getProductCategories(event) || [];
             const shippingOptions =
                 ProductListingUtils.getProductShippingOptions(event) || [];
+
+            console.log("Shipping Options: ", event)
 
             // Convert specs object to array of {key, value} objects
             const specsObj = ProductListingUtils.getProductSpecs(event);
