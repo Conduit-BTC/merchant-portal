@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useStoreProfileStore } from "@/stores/useStoreProfileStore";
 import { getNdk } from "@/services/ndkService";
 import { useLocation } from "wouter";

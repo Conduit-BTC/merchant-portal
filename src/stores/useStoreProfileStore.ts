@@ -6,6 +6,7 @@ import { loadUserProfileWithRelayDiscovery } from "@/utils/relayDiscovery";
 type StoreProfile = {
     name?: string;
     display_name?: string;
+    displayName?: string;
     about?: string;
     website?: string;
     picture?: string;
@@ -40,6 +41,17 @@ export const useStoreProfileStore = create<StoreProfileStore>((set) => ({
             }
 
             const parsed = JSON.parse(event.content);
+
+            // Normalize displayName logic
+            if (parsed.display_name && parsed.displayName) {
+                // If both exist, prefer display_name (NIP-01 standard), drop the deprecated one
+                delete parsed.displayName;
+            } else if (!parsed.display_name && parsed.displayName) {
+                // Only displayName exists (legacy): normalize it
+                parsed.display_name = parsed.displayName;
+                delete parsed.displayName;
+            }
+
             set({ profile: { ...parsed }, isLoading: false });
         } catch (err) {
             console.error("Failed to load profile", err);
@@ -68,14 +80,11 @@ export const useStoreProfileStore = create<StoreProfileStore>((set) => ({
                 ...updates,
             };
 
-            // const deprecatedKeys = ["displayName"];
+            // Ensure displayName is synced
+            if (merged.display_name) {
+                merged.displayName = merged.display_name;
+            }
 
-            // for (const key of deprecatedKeys) {
-            //     if (key in merged) {
-            //         console.warn(`Removing deprecated field: ${key}`);
-            //         delete (merged as Record<string, unknown>)[key];
-            //     }
-            // }
 
             const newEvent = new NDKEvent(ndk, {
                 kind: 0,
