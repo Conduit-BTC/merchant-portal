@@ -5,15 +5,14 @@ import "./Header.css";
 
 const Header: React.FC = () => {
     const { user, isLoggedIn, logout } = useAccountStore();
+    const { profile, fetchProfile } = useStoreProfileStore();
+
     const dropdownRef = useRef<HTMLDivElement>(null);
     const [dropdownOpen, setDropdownOpen] = useState(false);
-
-    const profile = useStoreProfileStore((state) => state.profile);
-    const profileDisplayName =
-        profile?.display_name || profile?.name || null;
-    const profilePicture = profile?.picture || null;
-
     const [displayName, setDisplayName] = useState<string>("");
+
+    const profileDisplayName = profile?.display_name || profile?.name || null;
+    const profilePicture = profile?.picture || null;
 
     const formatNpub = (npub: string): string =>
         `${npub.substring(0, 8)}...${npub.substring(npub.length - 8)}`;
@@ -21,6 +20,23 @@ const Header: React.FC = () => {
     const handleLogout = () => {
         logout();
     };
+    
+    // Innitial load
+    useEffect(() => {
+        (async () => {
+            if (isLoggedIn && user?.pubkey) {
+                await fetchProfile(user.pubkey);
+            }
+        })();
+    }, [isLoggedIn, user?.pubkey, fetchProfile]);
+
+    useEffect(() => {
+        if (profileDisplayName) {
+            setDisplayName(profileDisplayName);
+        } else if (user?.npub) {
+            setDisplayName(formatNpub(user.npub));
+        }
+    }, [profileDisplayName, user?.npub]);
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -37,14 +53,6 @@ const Header: React.FC = () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
     }, []);
-
-    useEffect(() => {
-        if (profileDisplayName) {
-            setDisplayName(profileDisplayName);
-        } else if (user?.npub) {
-            setDisplayName(formatNpub(user.npub));
-        }
-    }, [profileDisplayName, user?.npub]);
 
     return (
         <section className="header h-[var(--header-height)] w-screen mx-auto px-4 flex justify-between items-center border-b-2">
@@ -77,7 +85,7 @@ const Header: React.FC = () => {
                         )}
 
                         <span className="hidden sm:inline text-sm font-medium">
-                            {displayName || formatNpub(user?.npub || "xxx")}
+                            {displayName || formatNpub(user?.npub || "xxx")}  {/* TODO */}
                         </span>
 
                         {/* Dropdown Arrow */}
@@ -103,7 +111,7 @@ const Header: React.FC = () => {
                                 <div className="px-4 py-2 border-b">
                                     <p className="text-xs text-gray-500">Signed in as</p>
                                     <p className="text-sm font-medium text-gray-800 truncate">
-                                        {formatNpub(user?.npub || "xxx")}
+                                        {formatNpub(user?.npub || "xxx")} {/* TODO */}
                                     </p>
                                 </div>
                                 <button

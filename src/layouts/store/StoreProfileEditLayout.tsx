@@ -10,7 +10,6 @@ const StoreProfileEditLayout: React.FC = () => {
         name: "",
         display_name: "",
         about: "",
-        tags: "",
         website: "",
         nip05: "",
         lud16: "",
@@ -40,7 +39,6 @@ const StoreProfileEditLayout: React.FC = () => {
                 name: profile.name ?? "",
                 display_name: profile.display_name ?? "",
                 about: profile.about ?? "",
-                tags: profile.tags ? JSON.stringify(profile.tags, null, 2) : "",
                 website: profile.website ?? "",
                 nip05: profile.nip05 ?? "",
                 lud16: profile.lud16 ?? "",
@@ -171,16 +169,6 @@ const StoreProfileEditLayout: React.FC = () => {
                     <textarea
                         name="about"
                         value={form.about}
-                        onChange={handleChange}
-                        className="w-full px-4 py-2 border rounded-md"
-                    />
-                </div>
-
-                <div>
-                    <label className="block font-medium text-sm mb-1">Tags</label>
-                    <textarea
-                        name="tags"
-                        value={form.tags}
                         onChange={handleChange}
                         className="w-full px-4 py-2 border rounded-md"
                     />

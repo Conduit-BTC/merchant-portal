@@ -31,21 +31,21 @@ export const useStoreProfileStore = create<StoreProfileStore>((set) => ({
 
     fetchProfile: async (pubkey) => {
         try {
-          set({ isLoading: true, error: null });
-      
-          const event = await loadUserProfileWithRelayDiscovery(pubkey);
-          if (!event) {
-            set({ isLoading: false, profile: null });
-            return;
-          }
-      
-          const parsed = JSON.parse(event.content);
-          set({ profile: { ...parsed }, isLoading: false });
+            set({ isLoading: true, error: null });
+
+            const event = await loadUserProfileWithRelayDiscovery(pubkey);
+            if (!event) {
+                set({ isLoading: false, profile: null });
+                return;
+            }
+
+            const parsed = JSON.parse(event.content);
+            set({ profile: { ...parsed }, isLoading: false });
         } catch (err) {
-          console.error("Failed to load profile", err);
-          set({ error: "Failed to fetch profile", isLoading: false });
+            console.error("Failed to load profile", err);
+            set({ error: "Failed to fetch profile", isLoading: false });
         }
-      },
+    },
 
     updateProfile: async (pubkey, updates) => {
         try {
@@ -63,23 +63,20 @@ export const useStoreProfileStore = create<StoreProfileStore>((set) => ({
                 }
             }
 
-            if (typeof updates.tags === "string") {
-                try {
-                    const parsed = JSON.parse(updates.tags);
-                    if (Array.isArray(parsed) && parsed.every((t) => Array.isArray(t))) {
-                        tags = parsed;
-                    } else {
-                        console.warn("Invalid tags format (must be string[][])");
-                    }
-                } catch {
-                    console.warn("Failed to parse tags string");
-                }
-            }
-
             const merged = {
                 ...previousData,
                 ...updates,
             };
+
+            const deprecatedKeys = ["displayName"];
+
+            for (const key of deprecatedKeys) {
+                if (key in merged) {
+                    console.warn(`Removing deprecated field: ${key}`);
+                    delete (merged as Record<string, unknown>)[key];
+                }
+            }
+
             const newEvent = new NDKEvent(ndk, {
                 kind: 0,
                 pubkey,
