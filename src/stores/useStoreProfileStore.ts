@@ -68,14 +68,14 @@ export const useStoreProfileStore = create<StoreProfileStore>((set) => ({
                 ...updates,
             };
 
-            const deprecatedKeys = ["displayName"];
+            // const deprecatedKeys = ["displayName"];
 
-            for (const key of deprecatedKeys) {
-                if (key in merged) {
-                    console.warn(`Removing deprecated field: ${key}`);
-                    delete (merged as Record<string, unknown>)[key];
-                }
-            }
+            // for (const key of deprecatedKeys) {
+            //     if (key in merged) {
+            //         console.warn(`Removing deprecated field: ${key}`);
+            //         delete (merged as Record<string, unknown>)[key];
+            //     }
+            // }
 
             const newEvent = new NDKEvent(ndk, {
                 kind: 0,
