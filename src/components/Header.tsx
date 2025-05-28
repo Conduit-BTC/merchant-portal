@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useAccountStore } from "@/stores/useAccountStore";
 import { useStoreProfileStore } from "@/stores/useStoreProfileStore";
-import "./Header.css";
+// import "./Header.css";
+import '@/styles/typography.css'
+
 
 const Header: React.FC = () => {
     const { user, isLoggedIn, logout } = useAccountStore();
@@ -20,7 +22,7 @@ const Header: React.FC = () => {
     const handleLogout = () => {
         logout();
     };
-    
+
     // Innitial load
     useEffect(() => {
         (async () => {
@@ -55,13 +57,19 @@ const Header: React.FC = () => {
     }, []);
 
     return (
-        <section className="header h-[var(--header-height)] w-screen mx-auto px-4 flex justify-between items-center border-b-2">
+        <section className="header h-[var(--header-height)] w-screen mx-auto px-4 flex justify-between items-center">
             {/* Logo/Title */}
-            <div className="flex items-center">
-                <h1 className="text-xl font-bold text-gray-800 mr-2">
-                    Merchant Portal
-                </h1>
-                <h5>Powered by Conduit</h5>
+            <div className="flex flex-col">
+                <div className='flex'>
+                    <svg viewBox="0 0 40 59" fill="none" xmlns="http://www.w3.org/2000/svg" style= 'padding:10px; width:10%;'>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M37.9638 21.6515C35.0042 23.1672 34.5114 25.457 34.5114 27.3671V31.8612C34.5114 32.7784 33.8091 33.5676 32.8961 33.6108C31.9215 33.6569 31.1168 32.8774 31.1168 31.9094V6.30239C31.1168 4.82854 29.9264 3.63381 28.4578 3.63381C26.9892 3.63381 25.7987 4.82854 25.7987 6.30239V28.1139C25.7987 29.0311 25.0963 29.8203 24.1834 29.8634C23.2087 29.9095 22.4041 29.1301 22.4041 28.162V2.6118C22.4041 1.16929 21.239 0 19.8016 0C18.3643 0 17.1991 1.16929 17.1991 2.6118V28.1139C17.1991 29.0311 16.4968 29.8203 15.5839 29.8634C14.6092 29.9095 13.8046 29.1301 13.8046 28.162V6.30239C13.8046 4.82854 12.6141 3.63381 11.1455 3.63381C9.67688 3.63381 8.48641 4.82854 8.48641 6.30239V31.8612C8.48641 32.7784 7.78407 33.5676 6.87116 33.6108C5.89647 33.6569 5.09185 32.8774 5.09185 31.9094V27.3671C5.09185 25.457 4.59907 23.1672 1.63946 21.6515C0.889602 21.2674 0 21.8217 0 22.6666V38.155C0 49.1753 8.88301 58.1409 19.8016 58.1409C30.7202 58.1409 39.6032 49.1753 39.6032 38.155V22.6666C39.6032 21.8217 38.7136 21.2674 37.9638 21.6515ZM21.132 33.9651C21.3919 34.0746 21.5478 34.3432 21.514 34.6232L20.7251 41.1621L26.4141 41.1621C26.6297 41.1621 26.8339 41.162 26.998 41.1774C27.1568 41.1923 27.4131 41.2298 27.6285 41.4101C27.8825 41.6227 28.0218 41.9382 28.0171 42.263C28.0131 42.5351 27.8843 42.7521 27.7946 42.8866C27.7021 43.0253 27.5725 43.1865 27.4337 43.3589L19.6304 53.06C19.4536 53.2798 19.1525 53.3558 18.8926 53.2463C18.6326 53.1367 18.4767 52.8682 18.5105 52.5882L19.2995 46.0493H13.6104H13.6104C13.3948 46.0493 13.1906 46.0493 13.0266 46.0339C12.8677 46.0191 12.6115 45.9816 12.3961 45.8013C12.1421 45.5886 12.0028 45.2731 12.0075 44.9484C12.0114 44.6762 12.1403 44.4593 12.23 44.3247C12.3225 44.186 12.4521 44.0249 12.5908 43.8524L20.3942 34.1514C20.571 33.9316 20.872 33.8556 21.132 33.9651Z" fill="#BB00FF" />
+                    </svg>
+
+                    <h1 className="booming-voice">
+                        Merchant Portal
+                    </h1>
+                </div>
+                <h5 className="attention-voice">Powered by Conduit</h5>
             </div>
 
             {/* Account Dropdown */}

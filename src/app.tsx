@@ -1,4 +1,5 @@
-import "./app.css";
+// import "./app.css";
+import '@/styles/site.css'
 import ProductsLayout from "./layouts/products/ProductsLayout";
 import LoginLayout from "./layouts/login/LoginLayout";
 import Header from "./components/Header";
