@@ -1,9 +1,9 @@
 import { Link } from "wouter";
+import '@/styles/typography.css'
 
-import "./Sidebar.css";
 const Sidebar = () => {
     return (
-        <nav className="sidebar fixed w-48 flex flex-col h-screen gap-4 justify-start items-start">
+        <nav className="sidebar fixed w-48 flex flex-col h-screen gap-4 justify-start items-start" style='padding:30px; border-right: 1px solid gray'>
             <NavLink href="/store" isBold>Store</NavLink>
             <LinkList>
                 <NavLink href="/store">Profile</NavLink>

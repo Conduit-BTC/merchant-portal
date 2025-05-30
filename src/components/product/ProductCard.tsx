@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { ProductListing, ProductListingUtils } from "nostr-commerce-schema";
+import '@/styles/site.css'
+
 
 const PLACEHOLDER_IMAGE = "/placeholder-product.png";
 
@@ -47,7 +49,7 @@ const ProductCard: React.FC<ProductCardProps> = (
 
     return (
         <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:shadow-lg hover:scale-105">
-            <div className="relative pb-[75%] overflow-hidden bg-gray-100">
+            <div className="relative pb-[75%] overflow-hidden bg-gray-300">
                 <img
                     src={mainImage}
                     alt={title}
