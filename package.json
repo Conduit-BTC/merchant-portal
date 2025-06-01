@@ -4,16 +4,16 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
+    "dev": "bun run build:schema && vite",
+    "build": "bun run build:schema && vite build",
+    "build:schema": "cd external/nostr-commerce-schema && bun run build",
     "preview": "vite preview"
   },
   "dependencies": {
     "@nostr-dev-kit/ndk": "^2.12.0",
     "@tailwindcss/vite": "^4.0.9",
-    "nostr-commerce-schema": "link:nostr-commerce-schema",
+    "nostr-commerce-schema": "file:external/nostr-commerce-schema",
     "preact": "^10.19.6",
-    "tailwindcss": "^4.0.9",
     "uuid": "^11.1.0",
     "wouter": "^3.6.0",
     "zustand": "^5.0.3",
@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.8.2",
+    "@types/node": "^22.15.24",
     "typescript": "^5.2.2",
     "vite": "^5.2.0",
     "@tailwindcss/postcss": "latest",
