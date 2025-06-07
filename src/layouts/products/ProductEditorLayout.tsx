@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { useProductStore } from "@/stores/useProductStore";
-import ProductForm from "@/components/product/ProductForm";
+import ProductForm from "@/components/Product/ProductForm";
 import { useRoute, useLocation } from "wouter";
 
 const ProductEditorLayout: React.FC = () => {

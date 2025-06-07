@@ -5,15 +5,22 @@ import LoginLayout from "./layouts/login/LoginLayout";
 import Header from "./components/Header";
 import ShippingOptionsLayout from "./layouts/store/shipping/ShippingOptionsLayout";
 import RelayPoolsLayout from "./layouts/store/RelayPoolsLayout";
-import Sidebar from "@/components/Sidebar";
 import MainArea from "./layouts/MainArea";
+import Footer from './components/Footer.tsx'
+import { CartDrawer } from './layouts/CartDrawer.tsx'
 
 export function App() {
   return (
     <LoginLayout>
-      <Header />
-      <Sidebar />
-      <MainArea />
+      <div className="flex flex-col">
+        <Header />
+        <main className="min-h-screen lex-1 px-4 inner-column wide pt-12 justify-between items-center">
+          <MainArea />
+          <CartDrawer />
+        </main>
+
+        <Footer />
+      </div>
     </LoginLayout>
   );
 }

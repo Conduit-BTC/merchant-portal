@@ -46,7 +46,7 @@ const LoginLayout: React.FC<LoginLayoutProps> = ({ children }) => {
     }
 
     // User is logged in, render the children (main app content)
-    return <main className="min-h-screen">{children}</main>;
+    return <>{children}</>
 };
 
 export default LoginLayout;

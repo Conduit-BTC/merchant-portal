@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { useProductStore } from "@/stores/useProductStore";
-import ProductCard from "@/components/product/ProductCard";
+import ProductCard from "@/components/Cards/ProductCardMerchant";
 import { ProductListing, ProductListingUtils } from "nostr-commerce-schema";
 import { useLocation } from "wouter";
-import { PlusIcon, SearchIcon } from "@/components/icons/icons";
+import { PlusIcon, SearchIcon } from "@/assets/images/icons/icons";
+import Button from "@/components/Buttons/Button"
 import '@/styles/typography.css'
 
 const getTagValue = (tags: string[][], key: string): string =>
@@ -17,7 +18,7 @@ const ProductsLayout: React.FC = () => {
         fetchProducts,
         deleteProduct,
     } = useProductStore();
-    
+
     const [searchTerm, setSearchTerm] = useState("");
     const [sortBy, setSortBy] = useState<
         "newest" | "price" | "price-desc" | "title-asc" | "title-desc"
@@ -107,11 +108,11 @@ const ProductsLayout: React.FC = () => {
                         onChange={(e) =>
                             setSortBy(
                                 e.target.value as
-                                    | "newest"
-                                    | "price"
-                                    | "price-desc"
-                                    | "title-asc"
-                                    | "title-desc"
+                                | "newest"
+                                | "price"
+                                | "price-desc"
+                                | "title-asc"
+                                | "title-desc"
                             )
                         }
                         className="px-4 py-2 rounded-md border border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
@@ -124,21 +125,21 @@ const ProductsLayout: React.FC = () => {
                     </select>
 
                     {/* Add Product Button */}
-                    <button
+                    <Button
+                        size="md"
                         onClick={handleCreate}
-                        className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 text-white"
                     >
                         <PlusIcon className="w-4 h-4 mr-2" />
                         Add Product
-                    </button>
+                    </Button>
                     {/* Add Product Button */}
-                    <button
+                    <Button
+                        size="md"
                         onClick={handleSampleCreate}
-                        className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 text-white"
                     >
                         <PlusIcon className="w-4 h-4 mr-2" />
                         Add Sample Product
-                    </button>
+                    </Button>
                 </div>
             </div>
 

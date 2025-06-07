@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useLocation } from "wouter";
-import ProductForm from "@/components/product/ProductForm";
+import ProductForm from "@/components/Product/ProductForm";
 import { useProductStore } from "@/stores/useProductStore";
 import { ProductListing } from "nostr-commerce-schema";
 
