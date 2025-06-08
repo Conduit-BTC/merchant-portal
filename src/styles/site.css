@@ -189,7 +189,12 @@ layer(base);
     @apply bg-primary mb-4 flex justify-between gap-4 from-primary-800 to-primary/80 bg-gradient-to-b relative rounded-lg;
   }
 
-  .cart-drawer::before {
+  .form-modal {
+    @apply bg-primary from-primary-800 to-primary/80 bg-gradient-to-b relative rounded-lg;
+    border-radius: var(--radius-lg);
+  }
+
+  .cart-drawer::before, .form-modal::before {
     content: '';
     position: absolute;
     inset: -1px;

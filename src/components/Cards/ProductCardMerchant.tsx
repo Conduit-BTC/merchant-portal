@@ -106,8 +106,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
   }
 
   const handleEdit = () => {
-        onEdit(event);
-    };
+    onEdit(event);
+  };
 
   const handleDelete = () => {
     if (
@@ -197,19 +197,20 @@ const ProductCard: React.FC<ProductCardProps> = ({
             <p className="whisper-voice text-base-600">{storeName}</p>
           )}
         </div>
-        {/* add to cart - only show if not home card */}
-        <Button
-          size="sm"
-          onClick={handleEdit}
-        >
-          <EditIcon className="w-4 h-4 mr-2" />
-        </Button>
-        <Button
-          size="sm"
-          onClick={handleDelete}
-        >
-          <DeleteIcon className="w-4 h-4 mr-2" />
-        </Button>
+        <div className="flex">
+          <Button
+            size="sm"
+            onClick={handleEdit}
+          >
+            <EditIcon className="w-4 h-4 mr-2" />
+          </Button>
+          <Button
+            size="sm"
+            onClick={handleDelete}
+          >
+            <DeleteIcon className="w-4 h-4 mr-2" />
+          </Button>
+        </div>
       </CardFooter>
     </Card>
   )

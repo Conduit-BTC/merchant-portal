@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { X } from 'lucide-react'
 import { ProductListing, ProductListingUtils, ShippingOption } from "nostr-commerce-schema";
 import { useAccountStore } from "@/stores/useAccountStore";
 import DetailsTab from "./DetailsTab";
@@ -7,6 +8,7 @@ import ImagesTab from "./ImagesTab";
 import FormActions from "./FormActions";
 import TabNavigation from "./TabNavigation";
 import ShippingTab from "./ShippingTab";
+import Button from "@/components/Buttons/Button"
 
 interface ProductFormProps {
     event?: ProductListing;
@@ -288,12 +290,17 @@ const ProductForm: React.FC<ProductFormProps> = (
     };
 
     return (
-        <div className="bg-white rounded-lg shadow-lg p-6 max-w-4xl mx-auto">
-            <h2 className="text-2xl font-bold">
+        <div className="form-modal rounded-lg p-6 max-w-4xl mx-auto">
+            <div className="absolute top-[-40px] right-10 z-[-1] pb-2 bg-accent rounded-t-full from-primary-800 to-accent/80 bg-gradient-to-t">
+          <Button variant="ghost" size="icon">
+            <X />
+          </Button>
+        </div>
+            <h2 className="attention-voice">
                 {event ? "Edit Product" : "Create New Product"}
             </h2>
 
-            <p className="block text-xs font-medium text-gray-700">
+            <p className="solid-voice">
                 {formData.id}
             </p>
 
