@@ -43,10 +43,11 @@ export const useProductStore = create<ProductState>((set, get) => ({
 
             subscription.on("event", (event: NDKEvent) => {
                 try {
+                    console.log("Received ProductListing event:", event);
                     const rawEvent = event.rawEvent();
                     const content = rawEvent.content;
                     const tags = rawEvent.tags;
-
+                    // Find product ID tag
                     const findTag = (key: string) => tags.find(tag => tag[0] === key);
                     const findAllTags = (key: string) => tags.filter(tag => tag[0] === key);
 
@@ -85,7 +86,7 @@ export const useProductStore = create<ProductState>((set, get) => ({
 
                     rebuiltTags.push(...tTags);
 
-
+                    // Construct product object
                     const product = {
                         kind: 30402,
                         created_at: rawEvent.created_at || Math.floor(Date.now() / 1000),
@@ -124,6 +125,7 @@ export const useProductStore = create<ProductState>((set, get) => ({
 
         try {
             const ndk = await getNdk();
+            // Create NDK event
             const event = new NDKEvent(ndk);
             const timestamp = Math.floor(Date.now() / 1000);
 
@@ -261,7 +263,7 @@ export const useProductStore = create<ProductState>((set, get) => ({
             rebuiltTags.push(...tTags);
 
             // Do NOT include 'custom' tag — it breaks Zod schema
-
+            // Create updated product
             const updatedProduct = {
                 ...existingProduct,
                 ...updatedData,
@@ -277,7 +279,7 @@ export const useProductStore = create<ProductState>((set, get) => ({
                 set({ isLoading: false, error: "Validation failed" });
                 return;
             }
-
+            // Create and publish event
             const ndk = await getNdk();
             const event = new NDKEvent(ndk);
 
@@ -285,7 +287,7 @@ export const useProductStore = create<ProductState>((set, get) => ({
             event.content = updatedProduct.content;
             event.tags = rebuiltTags;
             event.created_at = timestamp;
-
+            // Sign and publish
             await event.sign();
             await event.publish();
 
