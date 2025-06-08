@@ -23,47 +23,89 @@ export const useProductStore = create<ProductState>((set, get) => ({
 
     fetchProducts: async () => {
         set({ isLoading: true, error: null });
+
         try {
             const ndk = await getNdk();
-            const subscription = ndk.subscribe({ kinds: [30402] });
-            // TODO: Only fetch products from the Merchant Npub
+
+            // 🟡 Get authenticated pubkey
+            const signerUser = await ndk.signer?.user();
+            const pubkey = signerUser?.pubkey;
+
+            if (!pubkey) {
+                throw new Error("Missing pubkey for authenticated user");
+            }
+
+            // 🟢 Subscribe to products authored by THIS user
+            const subscription = ndk.subscribe({
+                kinds: [30402],
+                authors: [pubkey]
+            });
 
             subscription.on("event", (event: NDKEvent) => {
                 try {
-                    console.log("Received ProductListing event:", event);
                     const rawEvent = event.rawEvent();
-                    // Parse the event content and tags
-                    const eventId = event.id || rawEvent.id;
                     const content = rawEvent.content;
                     const tags = rawEvent.tags;
 
-                    // Find product ID tag
-                    const idTag = tags.find(tag => tag[0] === 'd');
-                    if (!idTag || !idTag[1]) return;
+                    const findTag = (key: string) => tags.find(tag => tag[0] === key);
+                    const findAllTags = (key: string) => tags.filter(tag => tag[0] === key);
 
-                    const productId = idTag[1];
+                    const productId = findTag("d")?.[1];
+                    if (!productId) {
+                        console.warn("Skipping event: missing 'd' tag");
+                        return;
+                    }
 
-                    // Construct product object
+                    const title = findTag("title")?.[1] || "";
+                    const summary = findTag("summary")?.[1] || "";
+                    const imageTag = findTag("image");
+                    const location = findTag("location");
+                    const tTags = findAllTags("t").map(tag => tag.slice(0, 2));
+
+                    const rebuiltTags: NDKTag[] = [
+                        ["d", productId],
+                        ["title", title],
+                        ["price", "9.99", "USD"],
+                        ["type", "simple", "physical"],
+                        ["visibility", "on-sale"],
+                        ["stock", "10"],
+                        ["summary", summary],
+                        // other required tags first
+                    ];
+
+                    // Add optional tags at the end
+                    if (imageTag && imageTag.length >= 2) {
+                        const [_, url, alt = "Product image"] = imageTag;
+                        rebuiltTags.push(["image", url, alt]);
+                    }
+
+                    if (location && location.length >= 5) {
+                        rebuiltTags.push(location);
+                    }
+
+                    rebuiltTags.push(...tTags);
+
+
                     const product = {
-                        id: eventId,
                         kind: 30402,
                         created_at: rawEvent.created_at || Math.floor(Date.now() / 1000),
                         content,
-                        tags
+                        tags: rebuiltTags
                     };
 
-                    // Validate with zod schema
-                    try {
-                        const validatedProductZodObj = validateProductListing(product);
-                        if (!validatedProductZodObj.success) throw new Error("Invalid product data from fetched Event: " + JSON.stringify(validatedProductZodObj.error));
-
-                        // Add to store
-                        set(state => ({
-                            products: new Map(state.products).set(productId, { ...validatedProductZodObj.data, eventId })
-                        }));
-                    } catch (validationError) {
-                        console.error("Invalid product data:", validationError);
+                    // 🧪 Validate with Zod
+                    const validated = validateProductListing(product);
+                    if (!validated.success) {
+                        console.error("❌ Validation failed fetching:", JSON.stringify(validated.error, null, 2));
+                        return;
                     }
+
+                    set(state => ({
+                        products: new Map(state.products).set(productId, {
+                            ...validated.data,
+                            eventId: event.id || rawEvent.id
+                        })
+                    }));
                 } catch (err) {
                     console.error("Error processing event:", err);
                 }
@@ -76,44 +118,83 @@ export const useProductStore = create<ProductState>((set, get) => ({
         }
     },
 
+
     createProduct: async (productData) => {
         set({ isLoading: true, error: null });
+
         try {
             const ndk = await getNdk();
-
-            // Create NDK event
             const event = new NDKEvent(ndk);
             const timestamp = Math.floor(Date.now() / 1000);
 
-            // Construct product with current timestamp
+            // Extract productId from 'd' tag
+            const productId = productData.tags.find(tag => tag[0] === 'd')?.[1];
+            if (!productId) throw new Error("Missing 'd' tag (productId)");
+
+            // ✅ Rebuild tags in the correct order
+            const rebuiltTags: NDKTag[] = [];
+
+            rebuiltTags.push(["d", productId]);
+
+            const title = productData.tags.find(t => t[0] === "title")?.[1];
+            if (title) rebuiltTags.push(["title", title]);
+
+            const priceTag = productData.tags.find(t => t[0] === "price");
+            if (priceTag && priceTag.length >= 3) rebuiltTags.push(priceTag);
+
+            const typeTag = productData.tags.find(t => t[0] === "type");
+            if (typeTag && typeTag.length >= 3) rebuiltTags.push(typeTag);
+
+            const visibilityTag = productData.tags.find(t => t[0] === "visibility");
+            if (visibilityTag) rebuiltTags.push(visibilityTag);
+
+            const stockTag = productData.tags.find(t => t[0] === "stock");
+            if (stockTag) rebuiltTags.push(stockTag);
+
+            const summary = productData.tags.find(t => t[0] === "summary")?.[1];
+            if (summary) rebuiltTags.push(["summary", summary]);
+
+            const imageTag = productData.tags.find(t => t[0] === "image");
+            if (imageTag) rebuiltTags.push(imageTag);
+
+            const locationTag = productData.tags.find(t => t[0] === "location");
+            if (locationTag) rebuiltTags.push(locationTag);
+
+            const tTags = productData.tags.filter(t => t[0] === "t");
+            rebuiltTags.push(...tTags);
+
+            // ⛔ Do NOT include `custom` tag here — not part of schema
+
+            // Construct final product
             const product = {
                 ...productData,
-                created_at: timestamp
+                created_at: timestamp,
+                tags: rebuiltTags
             };
 
             console.log("Creating product:", product);
 
-            // Validate with schema
+            // ✅ Validate rebuilt product
             const validatedProductZodObj = validateProductListing(product);
-            if (!validatedProductZodObj.success) throw new Error("Issue creating Product: " + JSON.stringify(validatedProductZodObj.error));
+            if (!validatedProductZodObj.success) {
+                console.error("❌ Validation failed creating:", validatedProductZodObj.error);
+                set({
+                    isLoading: false,
+                    error: "Validation failed"
+                });
+                return;
+            }
 
-            // Set event data
+            // Prepare and publish event
             event.kind = 30402;
             event.content = product.content;
-            event.tags = product.tags as NDKTag[];
+            event.tags = rebuiltTags;
             event.created_at = timestamp;
 
-            // Sign and publish event
             await event.sign();
             await event.publish();
 
-            // Find product ID from tags
-            const idTag = product.tags.find(tag => tag[0] === 'd');
-            if (!idTag || !idTag[1]) throw new Error("Product ID missing");
-
-            const productId = idTag[1];
-
-            // Update local store
+            // Add to store
             set(state => ({
                 isLoading: false,
                 products: new Map(state.products).set(productId, product)
@@ -129,6 +210,7 @@ export const useProductStore = create<ProductState>((set, get) => ({
 
     updateProduct: async (id, updatedData) => {
         set({ isLoading: true, error: null });
+
         try {
             const { products } = get();
             const existingProduct = products.get(id);
@@ -137,35 +219,81 @@ export const useProductStore = create<ProductState>((set, get) => ({
                 throw new Error(`Product with ID ${id} not found`);
             }
 
-            // Create updated product
+            const timestamp = Math.floor(Date.now() / 1000);
+
+            const allTags = updatedData.tags || existingProduct.tags;
+            if (!allTags) throw new Error("Missing tags");
+
+            // Extract product ID from 'd' tag
+            const productId = allTags.find(tag => tag[0] === 'd')?.[1];
+            if (!productId) throw new Error("Missing 'd' tag (productId)");
+
+            // ✅ Rebuild tags cleanly — exclude any 'custom' tags
+            const rebuiltTags: NDKTag[] = [];
+
+            rebuiltTags.push(["d", productId]);
+
+            const title = allTags.find(t => t[0] === "title")?.[1];
+            if (title) rebuiltTags.push(["title", title]);
+
+            const priceTag = allTags.find(t => t[0] === "price");
+            if (priceTag && priceTag.length >= 3) rebuiltTags.push(priceTag);
+
+            const typeTag = allTags.find(t => t[0] === "type");
+            if (typeTag && typeTag.length >= 3) rebuiltTags.push(typeTag);
+
+            const visibilityTag = allTags.find(t => t[0] === "visibility");
+            if (visibilityTag) rebuiltTags.push(visibilityTag);
+
+            const stockTag = allTags.find(t => t[0] === "stock");
+            if (stockTag) rebuiltTags.push(stockTag);
+
+            const summary = allTags.find(t => t[0] === "summary")?.[1];
+            if (summary) rebuiltTags.push(["summary", summary]);
+
+            const imageTag = allTags.find(t => t[0] === "image");
+            if (imageTag) rebuiltTags.push(imageTag);
+
+            const locationTag = allTags.find(t => t[0] === "location");
+            if (locationTag) rebuiltTags.push(locationTag);
+
+            const tTags = allTags.filter(t => t[0] === "t");
+            rebuiltTags.push(...tTags);
+
+            // Do NOT include 'custom' tag — it breaks Zod schema
+
             const updatedProduct = {
                 ...existingProduct,
                 ...updatedData,
-                created_at: Math.floor(Date.now() / 1000)
+                created_at: timestamp,
+                tags: rebuiltTags
             };
 
-            // Validate with schema
-            const validatedProductZodObj = validateProductListing(updatedProduct);
-            if (!validatedProductZodObj.success) throw new Error("Issue updating Product: " + JSON.stringify(validatedProductZodObj.error));
+            console.log("Updating product:", updatedProduct);
 
-            // Create and publish event
+            const validated = validateProductListing(updatedProduct);
+            if (!validated.success) {
+                console.error("❌ Validation failed:", validated.error);
+                set({ isLoading: false, error: "Validation failed" });
+                return;
+            }
+
             const ndk = await getNdk();
             const event = new NDKEvent(ndk);
 
             event.kind = 30402;
             event.content = updatedProduct.content;
-            event.tags = updatedProduct.tags as NDKTag[];
-            event.created_at = updatedProduct.created_at;
+            event.tags = rebuiltTags;
+            event.created_at = timestamp;
 
-            // Sign and publish
             await event.sign();
             await event.publish();
 
-            // Update local store
             set(state => ({
                 isLoading: false,
                 products: new Map(state.products).set(id, updatedProduct)
             }));
+
         } catch (error) {
             console.error("Failed to update product:", error);
             set({
@@ -185,17 +313,20 @@ export const useProductStore = create<ProductState>((set, get) => ({
                 throw new Error(`Product with ID ${id} not found`);
             }
 
-            // Create deletion event
+            if (!existingProduct.eventId) {
+                throw new Error("Missing event ID for product");
+            }
+
             const ndk = await getNdk();
             const event = new NDKEvent(ndk);
 
-            const eventId = existingProduct.eventId!;
-            event.kind = 5; // Deletion event kind
+            event.kind = 5; // NIP-09 deletion event
             event.content = '';
             event.tags = [
-                ['e', eventId], // Event to delete
-                ['k', '30402'] // Kind to delete
+                ['e', existingProduct.eventId],
+                ['k', '30402']
             ];
+            event.created_at = Math.floor(Date.now() / 1000);
 
             // Sign and publish
             await event.sign();
