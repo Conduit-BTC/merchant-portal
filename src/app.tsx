@@ -7,7 +7,7 @@ import ShippingOptionsLayout from "./layouts/store/shipping/ShippingOptionsLayou
 import RelayPoolsLayout from "./layouts/store/RelayPoolsLayout";
 import MainArea from "./layouts/MainArea";
 import Footer from './components/Footer.tsx'
-import { CartDrawer } from './layouts/CartDrawer.tsx'
+import { NavDrawer } from './layouts/NavDrawer.tsx'
 
 export function App() {
   return (
@@ -16,7 +16,7 @@ export function App() {
         <Header />
         <main className="min-h-screen lex-1 px-4 inner-column wide pt-12 justify-between items-center">
           <MainArea />
-          <CartDrawer />
+          <NavDrawer />
         </main>
 
         <Footer />
