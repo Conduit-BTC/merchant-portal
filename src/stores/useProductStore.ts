@@ -155,12 +155,22 @@ export const useProductStore = create<ProductState>((set, get) => ({
 
             const summary = productData.tags.find(t => t[0] === "summary")?.[1];
             if (summary) rebuiltTags.push(["summary", summary]);
-
             const imageTag = productData.tags.find(t => t[0] === "image");
-            if (imageTag) rebuiltTags.push(imageTag);
+            if (imageTag && imageTag.length >= 2) {
+                const url = imageTag[1];
+                const alt = imageTag[2];
+                const order = imageTag[3];
+                const tag: NDKTag = ["image", url];
+                if (alt) tag.push(alt);
+                if (order) tag.push(order);
+                rebuiltTags.push(tag.slice(0, 4)); // Enforce max 4 elements
+            }
+
 
             const locationTag = productData.tags.find(t => t[0] === "location");
-            if (locationTag) rebuiltTags.push(locationTag);
+            if (locationTag && locationTag.length >= 2) {
+                rebuiltTags.push(locationTag);
+            }
 
             const tTags = productData.tags.filter(t => t[0] === "t");
             rebuiltTags.push(...tTags);
@@ -175,15 +185,12 @@ export const useProductStore = create<ProductState>((set, get) => ({
             };
 
             console.log("Creating product:", product);
+            console.log("✅ Final rebuiltTags:", rebuiltTags); // ← so you can see what's being validated
 
-            // ✅ Validate rebuilt product
-            const validatedProductZodObj = validateProductListing(product);
-            if (!validatedProductZodObj.success) {
-                console.error("❌ Validation failed creating:", validatedProductZodObj.error);
-                set({
-                    isLoading: false,
-                    error: "Validation failed"
-                });
+            const validated = validateProductListing(product);
+            if (!validated.success) {
+                console.error("❌ Validation failed creating:", validated.error);
+                set({ isLoading: false, error: "Validation failed" });
                 return;
             }
 
@@ -196,11 +203,12 @@ export const useProductStore = create<ProductState>((set, get) => ({
             await event.sign();
             await event.publish();
 
-            // Add to store
+            // Update local store
             set(state => ({
                 isLoading: false,
                 products: new Map(state.products).set(productId, product)
             }));
+
         } catch (error) {
             console.error("Failed to create product:", error);
             set({
