@@ -3,18 +3,24 @@ import { useLocation } from "wouter";
 import ProductForm from "@/components/product/ProductForm";
 import { useProductStore } from "@/stores/useProductStore";
 import { ProductListing } from "nostr-commerce-schema";
+import { v4 as uuidv4 } from "uuid";
 
 const useSampleProduct = () => {
+    const id = `product_id_${uuidv4()}`;
     return useMemo<ProductListing>(() => ({
         tags: [
+            ["d", id],
             ["title", "Sample Product"],
             ["summary", "This is a sample product"],
             ["price", "9.99", "USD"],
             ["stock", "10"],
+            ["type", "simple", "physical"],
+            ["visibility", "on-sale"],
+            ["image", "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fstatic.vecteezy.com%2Fsystem%2Fresources%2Fpreviews%2F006%2F091%2F020%2Foriginal%2Fsample-stamp-in-rubber-style-red-round-grunge-sample-sign-rubber-stamp-on-white-illustration-free-vector.jpg&f=1&nofb=1&ipt=0ed9b68dde1c3789001129742d49d207a6473d1fde85ea3242fd8124f6352a7a", "Sample"]
         ],
         content: "This is a sample product description.",
         created_at: Math.floor(Date.now() / 1000),
-        kind: 30402,
+        kind: 30402
     }), []);
 };
 
@@ -39,6 +45,7 @@ const ProductCreateLayout: React.FC = () => {
     };
 
     const handleSubmit = async (tags: string[][], content: string) => {
+        console.log("🧪 Tags received from form:", tags);
         setSubmitting(true);
         try {
             await createProduct({
@@ -46,7 +53,6 @@ const ProductCreateLayout: React.FC = () => {
                 tags,
                 content,
             });
-            console.log("✅ Product created");
             navigate("/products");
         } catch (err) {
             console.error("❌ Failed to create product:", err);
