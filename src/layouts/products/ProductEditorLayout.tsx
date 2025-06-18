@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { useProductStore } from "@/stores/useProductStore";
 import ProductForm from "@/components/Product/ProductForm";
 import { useRoute, useLocation } from "wouter";
@@ -6,13 +6,10 @@ import { useRoute, useLocation } from "wouter";
 const ProductEditorLayout: React.FC = () => {
     const [matchedRoute, params] = useRoute("/products/edit/:id");
     const [, navigate] = useLocation();
-    const { products, updateProduct } = useProductStore();
-
+    const updateProduct = useProductStore(state => state.updateProduct);
     const productId = params?.id;
+    const product = useProductStore(state => productId ? state.products.get(productId) : undefined);
 
-    const product = useMemo(() => {
-        return productId ? products.get(productId) : undefined;
-    }, [products, productId]);
 
     const handleSubmit = async (tags: string[][], content: string) => {
         if (!productId) return;
