@@ -5,7 +5,7 @@ const BasicTab = ({ formData, handleChange, errors }: { formData: any, handleCha
             <div>
                 <label
                     htmlFor="title"
-                    className="block text-sm font-medium text-gray-700"
+                    className="attention-voice"
                 >
                     Product Title*
                 </label>
@@ -15,7 +15,7 @@ const BasicTab = ({ formData, handleChange, errors }: { formData: any, handleCha
                     name="title"
                     value={formData.title}
                     onChange={handleChange}
-                    className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 ${errors.title ? "border-red-500" : ""
+                    className={`rounded-lg shadow-md hover:border-accent-500 transition-colors duration-300 bg-muted/60 border border-ink border-dashed input w-full px-4 py-2 rounded-md border border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 pl-10 ${errors.title ? "border-red-500" : ""
                         }`}
                     required
                 />
@@ -31,7 +31,7 @@ const BasicTab = ({ formData, handleChange, errors }: { formData: any, handleCha
                 <div>
                     <label
                         htmlFor="price.amount"
-                        className="block text-sm font-medium text-gray-700"
+                        className="attention-voice"
                     >
                         Price*
                     </label>
@@ -42,8 +42,8 @@ const BasicTab = ({ formData, handleChange, errors }: { formData: any, handleCha
                         value={formData.price.amount}
                         onChange={handleChange}
                         placeholder="19.99"
-                        className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 ${errors.price ? "border-red-500" : ""
-                            }`}
+                        className={`rounded-lg shadow-md hover:border-accent-500 transition-colors duration-300 bg-muted/60 border border-ink border-dashed input w-full px-4 py-2 rounded-md border border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 pl-10 ${errors.title ? "border-red-500" : ""
+                        }`}
                         required
                     />
                     {errors.price && (
@@ -56,7 +56,7 @@ const BasicTab = ({ formData, handleChange, errors }: { formData: any, handleCha
                 <div>
                     <label
                         htmlFor="price.currency"
-                        className="block text-sm font-medium text-gray-700"
+                        className=" attention-voice"
                     >
                         Currency*
                     </label>
@@ -65,7 +65,8 @@ const BasicTab = ({ formData, handleChange, errors }: { formData: any, handleCha
                         name="price.currency"
                         value={formData.price.currency}
                         onChange={handleChange}
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                        className={`rounded-lg shadow-md hover:border-accent-500 transition-colors duration-300 bg-muted/60 border border-ink border-dashed input w-full px-4 py-2 rounded-md border border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 pl-10
+                        }`}
                         required
                     >
                         <option value="USD">USD</option>
@@ -82,9 +83,9 @@ const BasicTab = ({ formData, handleChange, errors }: { formData: any, handleCha
                 <div>
                     <label
                         htmlFor="price.frequency"
-                        className="block text-sm font-medium text-gray-700"
+                        className="attention-voice"
                     >
-                        Frequency (optional)
+                        Frequency
                     </label>
                     <input
                         type="text"
@@ -93,7 +94,8 @@ const BasicTab = ({ formData, handleChange, errors }: { formData: any, handleCha
                         value={formData.price.frequency}
                         onChange={handleChange}
                         placeholder="per month"
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                        className={`rounded-lg shadow-md hover:border-accent-500 transition-colors duration-300 bg-muted/60 border border-ink border-dashed input w-full px-4 py-2 rounded-md border border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 pl-10
+                        }`}
                     />
                 </div>
             </div>
@@ -102,7 +104,7 @@ const BasicTab = ({ formData, handleChange, errors }: { formData: any, handleCha
             <div>
                 <label
                     htmlFor="summary"
-                    className="block text-sm font-medium text-gray-700"
+                    className="attention-voice"
                 >
                     Summary
                 </label>
@@ -113,7 +115,8 @@ const BasicTab = ({ formData, handleChange, errors }: { formData: any, handleCha
                     value={formData.summary}
                     onChange={handleChange}
                     placeholder="Brief description of the product"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                    className={`rounded-lg shadow-md hover:border-accent-500 transition-colors duration-300 bg-muted/60 border border-ink border-dashed input w-full px-4 py-2 rounded-md border border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 pl-10
+                        }`}
                 />
             </div>
 
@@ -121,7 +124,7 @@ const BasicTab = ({ formData, handleChange, errors }: { formData: any, handleCha
             <div>
                 <label
                     htmlFor="content"
-                    className="block text-sm font-medium text-gray-700"
+                    className="attention-voice"
                 >
                     Product Description
                 </label>
@@ -132,7 +135,8 @@ const BasicTab = ({ formData, handleChange, errors }: { formData: any, handleCha
                     value={formData.content}
                     onChange={handleChange}
                     placeholder="Detailed description of the product"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                    className={`rounded-lg shadow-md hover:border-accent-500 transition-colors duration-300 bg-muted/60 border border-ink border-dashed input w-full px-4 py-2 rounded-md border border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 pl-10
+                        }`}
                 />
             </div>
 
@@ -140,7 +144,7 @@ const BasicTab = ({ formData, handleChange, errors }: { formData: any, handleCha
             <div>
                 <label
                     htmlFor="stock"
-                    className="block text-sm font-medium text-gray-700"
+                    className="attention-voice"
                 >
                     Stock
                 </label>
@@ -151,7 +155,7 @@ const BasicTab = ({ formData, handleChange, errors }: { formData: any, handleCha
                     value={formData.stock}
                     onChange={handleChange}
                     placeholder="Available quantity"
-                    className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 ${errors.stock ? "border-red-500" : ""
+                    className={`rounded-lg shadow-md hover:border-accent-500 transition-colors duration-300 bg-muted/60 border border-ink border-dashed input w-full px-4 py-2 rounded-md border border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 pl-10
                         }`}
                 />
                 {errors.stock && (

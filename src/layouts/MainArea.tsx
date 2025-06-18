@@ -12,10 +12,20 @@ import PendingOrdersLayout from "./orders/PendingOrdersLayout";
 import FailedOrdersLayout from "./orders/FailedOrdersLayout";
 import CancelledOrdersLayout from "./orders/CancelledOrdersLayout";
 import CreateNewOrderLayout from "./orders/CreateNewOrderLayout";
+import Breadcrumbs from '@/components/Breadcrumbs'
+import { useBreadcrumbItems } from '../hooks/useBreadcrumbItems'
 
 const MainArea = () => {
+      const items = useBreadcrumbItems({
+    labelMap: {
+      store: 'Store',
+      products: 'My Products',
+      create: 'Create Product',
+    },
+  })
     return (
-        <main className='ml-48 p-4'>
+        <main className='p-4'>
+            <Breadcrumbs items={items} />
             <Switch>
                 <Route path="/store" nest>
                     <Route path="/" component={StoreProfileLayout} />

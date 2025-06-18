@@ -1,6 +1,6 @@
 import React from "react";
 import { useProductStore } from "@/stores/useProductStore";
-import ProductForm from "@/components/product/ProductForm";
+import ProductForm from "@/components/Product/ProductForm";
 import { useRoute, useLocation } from "wouter";
 
 const ProductEditorLayout: React.FC = () => {
@@ -38,8 +38,8 @@ const ProductEditorLayout: React.FC = () => {
     }
 
     return (
-        <div className="mx-auto px-4 py-8 max-w-2xl">
-            <h1 className="text-2xl font-bold mb-4">Edit Product</h1>
+        <div className="mx-auto px-4 py-8">
+            <h1 className="loud-voice">Edit Product</h1>
             <ProductForm
                 event={product}
                 onSubmit={handleSubmit}

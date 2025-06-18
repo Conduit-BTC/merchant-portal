@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useLocation } from "wouter";
-import ProductForm from "@/components/product/ProductForm";
+import ProductForm from "@/components/Product/ProductForm";
 import { useProductStore } from "@/stores/useProductStore";
 import { ProductListing } from "nostr-commerce-schema";
 import { v4 as uuidv4 } from "uuid";
@@ -68,9 +68,9 @@ const ProductCreateLayout: React.FC = () => {
     };
 
     return (
-        <div className="mx-auto px-4 py-8 max-w-2xl">
+        <div className="mx-auto px-4 py-8">
+            <h1 className="loud-voice">Create Product</h1>
             <div className="flex justify-between items-center mb-4">
-                <h1 className="text-2xl font-bold">Create Product</h1>
                 <button
                     onClick={handleFillSample}
                     className="btn-secondary"
