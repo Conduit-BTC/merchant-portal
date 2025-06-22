@@ -1,22 +1,19 @@
-import { X } from 'lucide-react'
-import { cn } from '@/lib/utils'
-import Button from '@/components/Buttons/Button'
-import Sidebar from '../components/Sidebar'
-import { useNavStore } from '@/stores/useNavStore'
+import { X } from "lucide-react";
+import { cn } from "@/lib/utils";
+import Button from "@/components/Buttons/Button";
+import NavLinks from "@/components/NavLinks";
+import { useNavStore } from "@/stores/useNavStore";
 
 export const NavDrawer = () => {
-
-  const {
-    isNavOpen,
-    toggleNav
-  } = useNavStore()
-
+  const { isNavOpen, toggleNav } = useNavStore();
 
   return (
     <div
       className={cn(
-        'fixed top-13 h-[95vh] left-0 w-80 z-50 transition-all duration-600 ease-bounce',
-        isNavOpen ? 'translate-x-0 opacity-90' : 'translate-x-[calc(-100%+60px)] opacity-50'
+        "fixed top-13 h-[95vh] left-0 w-80 z-50 transition-all duration-600 ease-bounce",
+        isNavOpen
+          ? "translate-x-0 opacity-90"
+          : "translate-x-[calc(-100%+60px)] opacity-50"
       )}
     >
       <div className="inner-column cart-drawer px-5 relative h-full">
@@ -27,9 +24,9 @@ export const NavDrawer = () => {
           </Button>
         </div>
         <div className="py-4">
-          <Sidebar embedded />
+          <NavLinks />
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
