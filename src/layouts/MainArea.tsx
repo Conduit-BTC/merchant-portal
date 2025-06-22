@@ -1,31 +1,24 @@
-import { Route, Switch } from 'wouter'
-import ProductsLayout from './products/ProductsLayout'
-import ProductCreateLayout from './products/ProductCreateLayout'
-import RelayPoolsLayout from './store/RelayPoolsLayout'
-import ShippingOptionsLayout from './store/shipping/ShippingOptionsLayout'
-import ProductEditorLayout from './products/ProductEditorLayout'
-import StoreProfileLayout from './store/StoreProfileLayout'
-import StoreProfileEditLayout from './store/StoreProfileEditLayout'
-import CheckoutSettingsLayout from './store/CheckoutSettingsLayout'
-import CompletedOrdersLayout from './orders/CompletedOrdersLayout'
-import PendingOrdersLayout from './orders/PendingOrdersLayout'
-import FailedOrdersLayout from './orders/FailedOrdersLayout'
-import CancelledOrdersLayout from './orders/CancelledOrdersLayout'
-import CreateNewOrderLayout from './orders/CreateNewOrderLayout'
-import Breadcrumbs from '@/components/Breadcrumbs'
-import { useBreadcrumbItems } from '../hooks/useBreadcrumbItems'
+import { Route, Switch } from "wouter";
+import ProductsLayout from "./products/ProductsLayout";
+import ProductCreateLayout from "./products/ProductCreateLayout";
+import RelayPoolsLayout from "./store/RelayPoolsLayout";
+import ShippingOptionsLayout from "./store/shipping/ShippingOptionsLayout";
+import ProductEditorLayout from "./products/ProductEditorLayout";
+import StoreProfileLayout from "./store/StoreProfileLayout";
+import StoreProfileEditLayout from "./store/StoreProfileEditLayout";
+import CheckoutSettingsLayout from "./store/CheckoutSettingsLayout";
+import CompletedOrdersLayout from "./orders/CompletedOrdersLayout";
+import PendingOrdersLayout from "./orders/PendingOrdersLayout";
+import FailedOrdersLayout from "./orders/FailedOrdersLayout";
+import CancelledOrdersLayout from "./orders/CancelledOrdersLayout";
+import CreateNewOrderLayout from "./orders/CreateNewOrderLayout";
+import StyleGuidePage from "@/layouts/StyleGuide";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import { useBreadcrumbItems } from "../hooks/useBreadcrumbItems";
 
 const MainArea = () => {
-  const items = useBreadcrumbItems({
-    labelMap: {
-      store: 'Store',
-      products: 'My Products',
-      create: 'Create Product'
-    }
-  })
   return (
-    <main className="p-4">
-      <Breadcrumbs items={items} />
+    <>
       <Switch>
         <Route path="/store" nest>
           <Route path="/" component={StoreProfileLayout} />
@@ -45,9 +38,10 @@ const MainArea = () => {
           <Route path="/cancelled" component={CancelledOrdersLayout} />
           <Route path="/create" component={CreateNewOrderLayout} />
         </Route>
+        <Route path="/style-guide" component={StyleGuidePage} />
       </Switch>
-    </main>
-  )
-}
+    </>
+  );
+};
 
-export default MainArea
+export default MainArea;
