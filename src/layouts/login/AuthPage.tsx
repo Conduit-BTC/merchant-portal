@@ -1,26 +1,26 @@
-import Button from "@/components/Buttons/Button";
-import React from "react";
-import PageSection from "@/layouts/PageSection";
-import { useAccountStore } from "@/stores/useAccountStore";
+import Button from '@/components/Buttons/Button'
+import React from 'react'
+import PageSection from '@/layouts/PageSection'
+import { useAccountStore } from '@/stores/useAccountStore'
 
 export const useInitializeAuth = () => {
-  const fetchUser = useAccountStore((state) => state.fetchUser);
-  const isLoggedIn = useAccountStore((state) => state.isLoggedIn);
+  const fetchUser = useAccountStore((state) => state.fetchUser)
+  const isLoggedIn = useAccountStore((state) => state.isLoggedIn)
 
   React.useEffect(() => {
     if (isLoggedIn) {
-      fetchUser();
+      fetchUser()
     }
-  }, [fetchUser, isLoggedIn]);
-};
+  }, [fetchUser, isLoggedIn])
+}
 
 const AuthPage: React.FC = () => {
-  useInitializeAuth();
-  const { login } = useAccountStore();
+  useInitializeAuth()
+  const { login } = useAccountStore()
 
   const handleLogin = () => {
-    login().catch((err) => console.error("Login error:", err));
-  };
+    login().catch((err) => console.error('Login error:', err))
+  }
 
   return (
     <PageSection
@@ -93,7 +93,7 @@ const AuthPage: React.FC = () => {
         />
       </picture>
     </PageSection>
-  );
-};
+  )
+}
 
-export default AuthPage;
+export default AuthPage

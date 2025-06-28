@@ -5,6 +5,7 @@ interface UseBreadcrumbItemsOptions {
   labelMap?: Record<string, string>
   rootName?: string
   rootPath?: string
+  includeRoot?: boolean
 }
 
 interface BreadcrumbItem {
@@ -16,7 +17,8 @@ interface BreadcrumbItem {
 export const useBreadcrumbItems = ({
   labelMap = {},
   rootName = 'Home',
-  rootPath = '/'
+  rootPath = '/',
+  includeRoot = true
 }: UseBreadcrumbItemsOptions = {}): BreadcrumbItem[] => {
   const [location] = useLocation()
 
@@ -25,10 +27,12 @@ export const useBreadcrumbItems = ({
   const items: BreadcrumbItem[] = []
 
   // Add root first
-  items.push({
-    label: labelMap[''] || rootName,
-    path: rootPath
-  })
+  if (includeRoot) {
+    items.push({
+      label: labelMap[''] || rootName,
+      path: rootPath
+    })
+  }
 
   segments.forEach((seg, i) => {
     const path = '/' + segments.slice(0, i + 1).join('/')
