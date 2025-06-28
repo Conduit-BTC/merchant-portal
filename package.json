@@ -7,7 +7,9 @@
     "dev": "bun run build:schema && vite",
     "build": "bun run build:schema && vite build",
     "build:schema": "cd external/nostr-commerce-schema && bun run build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,css,json,md}\" \"*.{ts,tsx,js,jsx,css,json,md}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,css,json,md}\" \"*.{ts,tsx,js,jsx,css,json,md}\""
   },
   "dependencies": {
     "@nostr-dev-kit/ndk": "^2.12.0",
