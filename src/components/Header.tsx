@@ -1,80 +1,67 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useAccountStore } from "@/stores/useAccountStore";
-import { useStoreProfileStore } from "@/stores/useStoreProfileStore";
-import "@/styles/typography.css";
-import StorePill from "./StorePill";
-import PageSection from "@/layouts/PageSection";
-import Breadcrumbs from "./Breadcrumbs";
-import Button from "./Buttons/Button";
-import Icon from "./Icon";
-import Field from "./Form/Field";
-import Logo from "./Logo";
-import { useBreadcrumbItems } from "@/hooks/useBreadcrumbItems";
-import NavLinks from "./NavLinks";
+import React, { useEffect, useState } from 'react'
+import { useAccountStore } from '@/stores/useAccountStore'
+import { useStoreProfileStore } from '@/stores/useStoreProfileStore'
+import '@/styles/typography.css'
+import PageSection from '@/layouts/PageSection'
+import Breadcrumbs from './Breadcrumbs'
+import Logo from './Logo'
+import { useBreadcrumbItems } from '@/hooks/useBreadcrumbItems'
+import UserDropdown from './UserDropdown'
 
 const Header: React.FC = () => {
-  const { user, isLoggedIn } = useAccountStore();
-  const { profile, fetchProfile } = useStoreProfileStore();
-  const [displayName, setDisplayName] = useState<string>("");
+  const { user, isLoggedIn } = useAccountStore()
+  const { profile, fetchProfile } = useStoreProfileStore()
+  const [displayName, setDisplayName] = useState<string>('')
 
-  const profileDisplayName = profile?.display_name || profile?.name || null;
-  const profilePicture = profile?.picture || null;
+  const profileDisplayName = profile?.display_name || profile?.name || null
+  const profilePicture = profile?.picture || null
 
   const formatNpub = (npub: string): string =>
-    `${npub.substring(0, 8)}...${npub.substring(npub.length - 8)}`;
+    `${npub.substring(0, 8)}...${npub.substring(npub.length - 8)}`
 
   // Innitial load
   useEffect(() => {
-    (async () => {
+    ;(async () => {
       if (isLoggedIn && user?.pubkey) {
-        await fetchProfile(user.pubkey);
+        await fetchProfile(user.pubkey)
       }
-    })();
-  }, [isLoggedIn, user?.pubkey, fetchProfile]);
+    })()
+  }, [isLoggedIn, user?.pubkey, fetchProfile])
 
   useEffect(() => {
     if (profileDisplayName) {
-      setDisplayName(profileDisplayName);
+      setDisplayName(profileDisplayName)
     } else if (user?.npub) {
-      setDisplayName(formatNpub(user.npub));
+      setDisplayName(formatNpub(user.npub))
     }
-  }, [profileDisplayName, user?.npub]);
+  }, [profileDisplayName, user?.npub])
 
   const items = useBreadcrumbItems({
     labelMap: {
-      store: "Store",
-      products: "My Products",
-      create: "Create Product",
+      store: 'Store',
+      products: 'My Products',
+      create: 'Create Product'
     },
-  });
+    includeRoot: false
+  })
 
   return (
-    <header className="relative">
-      <PageSection width="wide">
+    <header className="relative bg-sidebar">
+      <PageSection className="p-4">
         <div className="flex justify-between items-center gap-4">
-          <div>
-            <Logo className="max-w-50" />
+          <div className="flex items-end gap-1">
+            <Logo className="max-w-8" variant="icon" />
             <Breadcrumbs items={items} />
           </div>
-
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center flex-1 justify-end gap-4">
-            <NavLinks />
-
-            {/* login button, else user button */}
-            <StorePill
-              storeName={displayName ? displayName : "N"}
-              imageUrl={profilePicture}
-            />
-          </div>
-
-          {/* Mobile Menu */}
           {/* <MobileMenu /> */}
+          {isLoggedIn && displayName && (
+            <UserDropdown imageUrl={profilePicture} userName={displayName} />
+          )}
         </div>
         {/* <Breadcrumbs /> */}
       </PageSection>
     </header>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header
