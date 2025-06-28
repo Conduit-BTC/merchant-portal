@@ -16,6 +16,8 @@ const useSampleProduct = () => {
             ["stock", "10"],
             ["type", "simple", "physical"],
             ["visibility", "on-sale"],
+            ["weight", "1", "lb"],
+            ["dim", "4x4x4", "in"],
             ["image", "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fstatic.vecteezy.com%2Fsystem%2Fresources%2Fpreviews%2F006%2F091%2F020%2Foriginal%2Fsample-stamp-in-rubber-style-red-round-grunge-sample-sign-rubber-stamp-on-white-illustration-free-vector.jpg&f=1&nofb=1&ipt=0ed9b68dde1c3789001129742d49d207a6473d1fde85ea3242fd8124f6352a7a", "Sample"]
         ],
         content: "This is a sample product description.",
