@@ -1,28 +1,28 @@
-import Logo from "@/components/Logo";
-import Button from "@/components/Buttons/Button";
-import React, { type PropsWithChildren } from "react";
-import PageSection from "@/layouts/PageSection";
+import Logo from '@/components/Logo'
+import Button from '@/components/Buttons/Button'
+import React, { type PropsWithChildren } from 'react'
+import PageSection from '@/layouts/PageSection'
 
 const legalLinks = [
   {
-    name: "Privacy Policy",
-    link: "/privacy",
+    name: 'Privacy Policy',
+    link: '/privacy'
   },
   {
-    name: "Terms of Service",
-    link: "/terms",
+    name: 'Terms of Service',
+    link: '/terms'
   },
   {
-    name: "Cookies Settings",
-    link: "/cookies",
-  },
-];
+    name: 'Cookies Settings',
+    link: '/cookies'
+  }
+]
 
 const SimpleLayout: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <>
       <header className="relative">
-        <PageSection width="wide">
+        <PageSection>
           <div className="flex justify-between items-center gap-4">
             <div>
               <Logo className="max-w-50" />
@@ -59,7 +59,7 @@ const SimpleLayout: React.FC<PropsWithChildren> = ({ children }) => {
         </PageSection>
       </footer>
     </>
-  );
-};
+  )
+}
 
-export default SimpleLayout;
+export default SimpleLayout

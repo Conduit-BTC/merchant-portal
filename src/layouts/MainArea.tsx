@@ -1,20 +1,20 @@
-import { Route, Switch } from "wouter";
-import ProductsLayout from "./products/ProductsLayout";
-import ProductCreateLayout from "./products/ProductCreateLayout";
-import RelayPoolsLayout from "./store/RelayPoolsLayout";
-import ShippingOptionsLayout from "./store/shipping/ShippingOptionsLayout";
-import ProductEditorLayout from "./products/ProductEditorLayout";
-import StoreProfileLayout from "./store/StoreProfileLayout";
-import StoreProfileEditLayout from "./store/StoreProfileEditLayout";
-import CheckoutSettingsLayout from "./store/CheckoutSettingsLayout";
-import CompletedOrdersLayout from "./orders/CompletedOrdersLayout";
-import PendingOrdersLayout from "./orders/PendingOrdersLayout";
-import FailedOrdersLayout from "./orders/FailedOrdersLayout";
-import CancelledOrdersLayout from "./orders/CancelledOrdersLayout";
-import CreateNewOrderLayout from "./orders/CreateNewOrderLayout";
-import StyleGuidePage from "@/layouts/StyleGuide";
-import Breadcrumbs from "@/components/Breadcrumbs";
-import { useBreadcrumbItems } from "../hooks/useBreadcrumbItems";
+import { Route, Switch } from 'wouter'
+import ProductsLayout from './products/ProductsLayout'
+import ProductCreateLayout from './products/ProductCreateLayout'
+import RelayPoolsLayout from './store/RelayPoolsLayout'
+import ShippingOptionsLayout from './store/shipping/ShippingOptionsLayout'
+import ProductEditorLayout from './products/ProductEditorLayout'
+import StoreProfileLayout from './store/StoreProfileLayout'
+import StoreProfileEditLayout from './store/StoreProfileEditLayout'
+import CheckoutSettingsLayout from './store/CheckoutSettingsLayout'
+import CompletedOrdersLayout from './orders/CompletedOrdersLayout'
+import PendingOrdersLayout from './orders/PendingOrdersLayout'
+import FailedOrdersLayout from './orders/FailedOrdersLayout'
+import CancelledOrdersLayout from './orders/CancelledOrdersLayout'
+import CreateNewOrderLayout from './orders/CreateNewOrderLayout'
+import StyleGuidePage from '@/layouts/StyleGuide'
+import Breadcrumbs from '@/components/Breadcrumbs'
+import { useBreadcrumbItems } from '../hooks/useBreadcrumbItems'
 
 const MainArea = () => {
   return (
@@ -41,7 +41,7 @@ const MainArea = () => {
         <Route path="/style-guide" component={StyleGuidePage} />
       </Switch>
     </>
-  );
-};
+  )
+}
 
-export default MainArea;
+export default MainArea

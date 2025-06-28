@@ -1,13 +1,13 @@
 //
 
-import { ColorGuide } from "@/components/StyleGuide/ColorGuide";
-import { TypographyGuide } from "@/components/StyleGuide/TypographyGuide";
-import PageSection from "@/layouts/PageSection";
+import { ColorGuide } from '@/components/StyleGuide/ColorGuide'
+import { TypographyGuide } from '@/components/StyleGuide/TypographyGuide'
+import PageSection from '@/layouts/PageSection'
 
 export default function StyleGuidePage() {
   return (
     <div className="grid gap-8">
-      <PageSection width="wide">
+      <PageSection>
         <div className="mb-8">
           <h1 className="voice-6l mb-6">Style Guide</h1>
           <p className="text-muted-foreground">
@@ -16,10 +16,10 @@ export default function StyleGuidePage() {
         </div>
       </PageSection>
 
-      <PageSection width="wide">
+      <PageSection>
         <ColorGuide />
         <TypographyGuide />
       </PageSection>
     </div>
-  );
+  )
 }
