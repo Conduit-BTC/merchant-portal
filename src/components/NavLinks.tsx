@@ -1,94 +1,94 @@
-import Button from "./Buttons/Button";
-import Icon from "./Icon";
+import Button from './Buttons/Button'
+import Icon from './Icon'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "./Form/Dropdown";
+  DropdownMenuTrigger
+} from './Form/Dropdown'
 
 const navLinks = [
   {
-    header: "QUICK ACTIONS",
+    header: 'QUICK ACTIONS',
     headerIcon: <Icon.Zap />,
     links: [
       {
-        href: "/store",
+        href: '/store',
         icon: <Icon.Plus />,
-        text: "Add product",
-      },
-    ],
+        text: 'Add product'
+      }
+    ]
   },
   {
-    header: "STORE",
+    header: 'STORE',
     headerIcon: <Icon.ShoppingBag />,
     links: [
       {
-        href: "/store",
+        href: '/store',
         icon: <Icon.User />,
-        text: "Profile",
+        text: 'Profile'
       },
       {
-        href: "/store/relays",
-        text: "Relays",
+        href: '/store/relays',
+        text: 'Relays'
       },
       {
-        href: "/store/shipping",
-        text: "Shipping",
+        href: '/store/shipping',
+        text: 'Shipping'
       },
       {
-        href: "/store/checkout",
-        text: "Checkout",
-      },
-    ],
+        href: '/store/checkout',
+        text: 'Checkout'
+      }
+    ]
   },
   {
-    header: "PRODUCTS",
+    header: 'PRODUCTS',
     headerIcon: <Icon.ShoppingCart />,
     links: [
       {
-        href: "/products",
+        href: '/products',
         icon: <Icon.ShoppingCart />,
-        text: "My Products",
+        text: 'My Products'
       },
       {
-        href: "/products/create",
-        text: "Create Product",
-      },
-    ],
+        href: '/products/create',
+        text: 'Create Product'
+      }
+    ]
   },
   {
-    header: "ORDERS",
+    header: 'ORDERS',
     headerIcon: <Icon.ShoppingCart />,
     links: [
       {
-        href: "/orders/completed",
-        text: "Completed",
+        href: '/orders/completed',
+        text: 'Completed'
       },
       {
-        href: "/orders/pending",
-        text: "Pending",
+        href: '/orders/pending',
+        text: 'Pending'
       },
       {
-        href: "/orders/failed",
-        text: "Failed",
+        href: '/orders/failed',
+        text: 'Failed'
       },
       {
-        href: "/orders/cancelled",
-        text: "Cancelled",
+        href: '/orders/cancelled',
+        text: 'Cancelled'
       },
       {
-        href: "/orders/create",
-        text: "Create New Order",
-      },
-    ],
-  },
-];
+        href: '/orders/create',
+        text: 'Create New Order'
+      }
+    ]
+  }
+]
 
 const NavLinks = () => {
   const handleNavigation = (href: string) => {
-    window.location.href = href;
-  };
+    window.location.href = href
+  }
 
   return (
     <nav className="">
@@ -115,7 +115,7 @@ const NavLinks = () => {
         </DropdownMenu>
       ))}
     </nav>
-  );
-};
+  )
+}
 
-export default NavLinks;
+export default NavLinks
