@@ -1,222 +1,222 @@
-import React from "react";
-import Button from "./Buttons/Button";
-import Icon from "@/components/Icon";
-import PageSection from "@/layouts/PageSection";
-import Logo from "@/components/Logo";
+import React from 'react'
+import Button from './Buttons/Button'
+import Icon from '@/components/Icon'
+import PageSection from '@/layouts/PageSection'
+import Logo from '@/components/Logo'
 
 interface NavLink {
-  name: string;
-  link: string;
+  name: string
+  link: string
 }
 
 interface NavSection {
-  heading: string;
-  links: NavLink[];
+  heading: string
+  links: NavLink[]
 }
 
 const navs: NavSection[] = [
   {
-    heading: "Shop",
+    heading: 'Shop',
     links: [
       {
-        name: "All",
-        link: "/shop/all",
+        name: 'All',
+        link: '/shop/all'
       },
       {
-        name: "Categories",
-        link: "/shop/categories",
+        name: 'Categories',
+        link: '/shop/categories'
       },
       {
-        name: "Search",
-        link: "/shop/search",
+        name: 'Search',
+        link: '/shop/search'
       },
       {
-        name: "Trending",
-        link: "/shop/trending",
-      },
-    ],
+        name: 'Trending',
+        link: '/shop/trending'
+      }
+    ]
   },
   {
-    heading: "Sell",
+    heading: 'Sell',
     links: [
       {
-        name: "Your stores",
-        link: "/sell/stores",
+        name: 'Your stores',
+        link: '/sell/stores'
       },
       {
-        name: "Your products",
-        link: "/sell/products",
+        name: 'Your products',
+        link: '/sell/products'
       },
       {
-        name: "Manage store",
-        link: "/sell/manage",
+        name: 'Manage store',
+        link: '/sell/manage'
       },
       {
-        name: "Messages",
-        link: "/sell/messages",
-      },
-    ],
+        name: 'Messages',
+        link: '/sell/messages'
+      }
+    ]
   },
   {
-    heading: "For Sellers",
+    heading: 'For Sellers',
     links: [
       {
-        name: "Book a demo",
-        link: "/sellers/demo",
+        name: 'Book a demo',
+        link: '/sellers/demo'
       },
       {
-        name: "Create a store",
-        link: "/sellers/create",
+        name: 'Create a store',
+        link: '/sellers/create'
       },
       {
-        name: "Features",
-        link: "/sellers/features",
+        name: 'Features',
+        link: '/sellers/features'
       },
       {
-        name: "Why Conduit",
-        link: "/sellers/why-conduit",
+        name: 'Why Conduit',
+        link: '/sellers/why-conduit'
       },
       {
-        name: "FAQ",
-        link: "/sellers/faq",
-      },
-    ],
+        name: 'FAQ',
+        link: '/sellers/faq'
+      }
+    ]
   },
   {
-    heading: "For Shoppers",
+    heading: 'For Shoppers',
     links: [
       {
-        name: "Join waitlist",
-        link: "/shoppers/waitlist",
+        name: 'Join waitlist',
+        link: '/shoppers/waitlist'
       },
       {
-        name: "Features",
-        link: "/shoppers/features",
+        name: 'Features',
+        link: '/shoppers/features'
       },
       {
-        name: "Why Conduit",
-        link: "/shoppers/why-conduit",
+        name: 'Why Conduit',
+        link: '/shoppers/why-conduit'
       },
       {
-        name: "About us",
-        link: "/shoppers/about",
+        name: 'About us',
+        link: '/shoppers/about'
       },
       {
-        name: "FAQ",
-        link: "/shoppers/faq",
-      },
-    ],
+        name: 'FAQ',
+        link: '/shoppers/faq'
+      }
+    ]
   },
   {
-    heading: "Site Map",
+    heading: 'Site Map',
     links: [
       {
-        name: "Home",
-        link: "/",
+        name: 'Home',
+        link: '/'
       },
       {
-        name: "Style Guide",
-        link: "/style-guide",
+        name: 'Style Guide',
+        link: '/style-guide'
       },
       {
-        name: "How it Works",
-        link: "/how-it-works",
+        name: 'How it Works',
+        link: '/how-it-works'
       },
       {
-        name: "Auth",
-        link: "/auth",
+        name: 'Auth',
+        link: '/auth'
       },
       {
-        name: "List of Merchants",
-        link: "/merchants",
+        name: 'List of Merchants',
+        link: '/merchants'
       },
       {
-        name: "List of Merchant Products",
-        link: "/merchant/conduit",
+        name: 'List of Merchant Products',
+        link: '/merchant/conduit'
       },
       {
-        name: "List of Categories",
-        link: "/categories",
+        name: 'List of Categories',
+        link: '/categories'
       },
       {
-        name: "List of Products in a Category",
-        link: "/category/Drinks",
+        name: 'List of Products in a Category',
+        link: '/category/Drinks'
       },
       {
-        name: "Product Detail Page",
-        link: "/product/123",
+        name: 'Product Detail Page',
+        link: '/product/123'
       },
       {
-        name: "List of Carts",
-        link: "/carts",
+        name: 'List of Carts',
+        link: '/carts'
       },
       {
-        name: "Merchant Cart",
-        link: "/cart/conduit",
+        name: 'Merchant Cart',
+        link: '/cart/conduit'
       },
       {
-        name: "Profile",
-        link: "/profile",
+        name: 'Profile',
+        link: '/profile'
       },
       {
-        name: "Orders",
-        link: "/profile/orders",
+        name: 'Orders',
+        link: '/profile/orders'
       },
       {
-        name: "Zapout",
-        link: "/zapout",
-      },
-    ],
-  },
-];
+        name: 'Zapout',
+        link: '/zapout'
+      }
+    ]
+  }
+]
 
 const socials = [
   {
-    name: "GitHub",
-    link: "#",
-    icon: "github",
+    name: 'GitHub',
+    link: '#',
+    icon: 'github'
   },
   {
-    name: "Facebook",
-    link: "#",
-    icon: "facebook",
+    name: 'Facebook',
+    link: '#',
+    icon: 'facebook'
   },
   {
-    name: "Instagram",
-    link: "#",
-    icon: "instagram",
+    name: 'Instagram',
+    link: '#',
+    icon: 'instagram'
   },
   {
-    name: "X",
-    link: "#",
-    icon: "x",
+    name: 'X',
+    link: '#',
+    icon: 'x'
   },
   {
-    name: "LinkedIn",
-    link: "#",
-    icon: "linkedin",
-  },
-];
+    name: 'LinkedIn',
+    link: '#',
+    icon: 'linkedin'
+  }
+]
 
 const legalLinks = [
   {
-    name: "Privacy Policy",
-    link: "/privacy",
+    name: 'Privacy Policy',
+    link: '/privacy'
   },
   {
-    name: "Terms of Service",
-    link: "/terms",
+    name: 'Terms of Service',
+    link: '/terms'
   },
   {
-    name: "Cookies Settings",
-    link: "/cookies",
-  },
-];
+    name: 'Cookies Settings',
+    link: '/cookies'
+  }
+]
 
 const Footer = () => {
   return (
     <footer className="bg-paper overflow-hidden mt-10">
-      <PageSection width="wide">
+      <PageSection>
         <div className=" pt-12 grid gap-8 grid-cols-[repeat(auto-fill,minmax(200px,1fr))]">
           <Logo className="max-w-50" />
           {navs.map((nav) => (
@@ -243,7 +243,7 @@ const Footer = () => {
         </div>
       </PageSection>
 
-      <PageSection width="wide">
+      <PageSection>
         <div className="border-t border-muted py-8 flex flex-col md:flex-row justify-between items-center">
           <div className="legal flex items-center flex-wrap gap-4">
             <span className="voice-sm text-muted-foreground">
@@ -282,7 +282,7 @@ const Footer = () => {
         </div>
       </PageSection>
     </footer>
-  );
-};
+  )
+}
 
-export default Footer;
+export default Footer
