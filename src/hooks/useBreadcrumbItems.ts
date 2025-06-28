@@ -16,7 +16,7 @@ interface BreadcrumbItem {
 export const useBreadcrumbItems = ({
   labelMap = {},
   rootName = 'Home',
-  rootPath = '/',
+  rootPath = '/'
 }: UseBreadcrumbItemsOptions = {}): BreadcrumbItem[] => {
   const [location] = useLocation()
 
@@ -27,7 +27,7 @@ export const useBreadcrumbItems = ({
   // Add root first
   items.push({
     label: labelMap[''] || rootName,
-    path: rootPath,
+    path: rootPath
   })
 
   segments.forEach((seg, i) => {
@@ -37,7 +37,7 @@ export const useBreadcrumbItems = ({
     items.push({
       label: labelMap[seg] || capitalize(seg),
       path,
-      isActive: isLast,
+      isActive: isLast
     })
   })
 

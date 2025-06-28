@@ -21,6 +21,5 @@ export const useNavStore = create<NavState>()((set) => ({
   isNavOpen: true,
   openNav: () => set({ isNavOpen: true }),
   closeNav: () => set({ isNavOpen: false }),
-  toggleNav: () => set((state) => ({ isNavOpen: !state.isNavOpen })),
+  toggleNav: () => set((state) => ({ isNavOpen: !state.isNavOpen }))
 }))
-

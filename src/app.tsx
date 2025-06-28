@@ -1,11 +1,11 @@
 // import "./app.css";
 import '@/styles/site.css'
-import ProductsLayout from "./layouts/products/ProductsLayout";
-import LoginLayout from "./layouts/login/LoginLayout";
-import Header from "./components/Header";
-import ShippingOptionsLayout from "./layouts/store/shipping/ShippingOptionsLayout";
-import RelayPoolsLayout from "./layouts/store/RelayPoolsLayout";
-import MainArea from "./layouts/MainArea";
+import ProductsLayout from './layouts/products/ProductsLayout'
+import LoginLayout from './layouts/login/LoginLayout'
+import Header from './components/Header'
+import ShippingOptionsLayout from './layouts/store/shipping/ShippingOptionsLayout'
+import RelayPoolsLayout from './layouts/store/RelayPoolsLayout'
+import MainArea from './layouts/MainArea'
 import Footer from './components/Footer.tsx'
 import { NavDrawer } from './layouts/NavDrawer.tsx'
 
@@ -22,16 +22,14 @@ export function App() {
         <Footer />
       </div>
     </LoginLayout>
-  );
+  )
 }
 
 const OldApp = () => {
   return (
     <>
       <div className="mx-auto px-4 py-4">
-        <h1 className="text-2xl font-semibold text-orange-900">
-          Merchant X
-        </h1>
+        <h1 className="text-2xl font-semibold text-orange-900">Merchant X</h1>
         <p className="text-sm text-orange-500">
           The Merchant Experience for Nostr Rockstars
         </p>
@@ -49,5 +47,5 @@ const OldApp = () => {
         </div>
       </footer>
     </>
-  );
-};
+  )
+}
