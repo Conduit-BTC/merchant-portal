@@ -135,6 +135,20 @@ const colors: ColorScheme = {
     't-2xl': 'shadow-tertiary shadow-2xl',
     'a-xs': 'shadow-accent shadow-xs',
     'a-2xl': 'shadow-accent shadow-2xl'
+  },
+
+  shadcn: {
+    background: 'bg-background text-foreground',
+    card: 'bg-card text-card-foreground',
+    popover: 'bg-popover text-popover-foreground',
+    sidebar: 'bg-sidebar text-sidebar-foreground',
+    'sidebar-primary': 'bg-sidebar-primary text-sidebar-primary-foreground',
+    'sidebar-accent': 'bg-sidebar-accent text-sidebar-accent-foreground',
+    input: 'bg-input',
+    border: 'border border-border',
+    'sidebar-border': 'border border-sidebar-border',
+    ring: 'ring ring-ring',
+    'sidebar-ring': 'ring ring-sidebar-ring'
   }
 }
 
