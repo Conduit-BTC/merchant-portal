@@ -1,34 +1,33 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap")
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap')
 layer(base);
 
 /* P reset */
-@import "./reset.css" layer(base);
+@import './reset.css' layer(base);
 
 /* S etup */
-@import "./setup.css" layer(base);
+@import './setup.css' layer(base);
 
-@import "./theme.css" layer(theme);
+@import './theme.css' layer(theme);
 
-@import "./typography.css" layer(utilities);
+@import './typography.css' layer(utilities);
 
-@import "tailwindcss";
-
-/* @plugin "tailwindcss-animate"; */
+@import 'tailwindcss';
+@import 'tw-animate-css';
 
 @custom-variant light (&:is(.light, [data-mode="light"], .light *, [data-mode="light"] *));
 
 @font-face {
-  font-family: "Whyte Inktrap Variable";
-  src: url("../assets/fonts/ABCWhyteInktrapVariable-Trial.woff2")
-    format("woff2-variations");
+  font-family: 'Whyte Inktrap Variable';
+  src: url('../assets/fonts/ABCWhyteInktrapVariable-Trial.woff2')
+    format('woff2-variations');
   font-weight: 1 999;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "Whyte Mono Inktrap Variable";
-  src: url("../assets/fonts/ABCWhyteMonoInktrapVariable-Trial.woff2")
-    format("woff2-variations");
+  font-family: 'Whyte Mono Inktrap Variable';
+  src: url('../assets/fonts/ABCWhyteMonoInktrapVariable-Trial.woff2')
+    format('woff2-variations');
   font-weight: 1 999;
   font-display: swap;
 }
@@ -60,8 +59,7 @@ layer(base);
   }
 
   body {
-    background-color: var(--color-paper);
-    color: var(--color-ink);
+    @apply bg-paper text-ink;
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -77,39 +75,6 @@ layer(base);
 /* then other contextual styles */
 
 @layer components {
-  /*  */
-
-  /* scrollbar */
-  * {
-    /* -ms-overflow-style: none; IE and Edge */
-    /* scrollbar-width: var(--line-width, 4px); Firefox */
-  }
-  /* This part is for the scrollbar track / */
-  /* *::-webkit-scrollbar {
-    width: var(--line-width, 4px);
-    height: var(--line-width, 4px);
-  } */
-
-  /* / This part is for the track (the part that the thumb slides across) / */
-  /* ::-webkit-scrollbar-track {
-    box-shadow: var(--shadow-xs);
-    border-radius: var(--radius-lg);
-  } */
-
-  /* / This part is for the thumb (the part you drag) / */
-  /* ::-webkit-scrollbar-thumb {
-    background: linear-gradient(
-      to bottom,
-      var(--color-primary),
-      var(--color-secondary)
-    );
-    border-radius: var(--radius-lg);
-  } */
-
-  /* / This part is for the thumb when it's being hovered over  */
-  /* ::-webkit-scrollbar-thumb:hover {
-    filter: brightness(1.2);
-  } */
 }
 
 @layer utilities {
@@ -131,16 +96,5 @@ layer(base);
 @layer components {
   .tabs-list {
     @apply flex items-center p-1 relative;
-
-    /* &::before {
-      content: '';
-      position: absolute;
-      height: 2px;
-      bottom: 0;
-      left: var(--tab-left, 0);
-      width: var(--tab-width, 30px);
-      background: var(--color-primary);
-      transition: left var(--transition-normal), width var(--transition-normal);
-    }*/
   }
 }
