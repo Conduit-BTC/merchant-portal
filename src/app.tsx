@@ -1,24 +1,24 @@
-import "@/styles/site.css";
-import MainArea from "./layouts/MainArea";
-import { useAccountStore } from "./stores/useAccountStore";
-import AuthPage from "./layouts/login/AuthPage.tsx";
-import MainLayout from "./layouts/MainLayout.tsx";
-import SimpleLayout from "./layouts/SimpleLayout.tsx";
+import '@/styles/site.css'
+import MainArea from './layouts/MainArea'
+import { useAccountStore } from './stores/useAccountStore'
+import AuthPage from './layouts/login/AuthPage.tsx'
+import SimpleLayout from './layouts/SimpleLayout.tsx'
+import DashboardLayout from './layouts/DashboardLayout.tsx'
 
 export function App() {
-  const { isLoggedIn, user } = useAccountStore();
+  const { isLoggedIn, user } = useAccountStore()
 
   if (!isLoggedIn || !user) {
     return (
       <SimpleLayout>
         <AuthPage />
       </SimpleLayout>
-    );
+    )
   }
 
   return (
-    <MainLayout>
+    <DashboardLayout>
       <MainArea />
-    </MainLayout>
-  );
+    </DashboardLayout>
+  )
 }
