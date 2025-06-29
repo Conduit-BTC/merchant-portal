@@ -4,6 +4,7 @@ import ProductForm from '@/components/Product/ProductForm'
 import { useProductStore } from '@/stores/useProductStore'
 import { ProductListing } from 'nostr-commerce-schema'
 import { v4 as uuidv4 } from 'uuid'
+import PageSection from '../PageSection'
 
 const useSampleProduct = () => {
   const id = `product_id_${uuidv4()}`
@@ -74,8 +75,7 @@ const ProductCreateLayout: React.FC = () => {
   }
 
   return (
-    <div className="mx-auto px-4 py-8">
-      <h1 className="loud-voice">Create Product</h1>
+    <PageSection>
       <div className="flex justify-between items-center mb-4">
         <button
           onClick={handleFillSample}
@@ -92,6 +92,7 @@ const ProductCreateLayout: React.FC = () => {
         event={productData}
         onSubmit={handleSubmit}
         onCancel={handleCancel}
+        mode="create"
         disabled={submitting}
       />
 
@@ -100,7 +101,7 @@ const ProductCreateLayout: React.FC = () => {
           Submitting product...
         </div>
       )}
-    </div>
+    </PageSection>
   )
 }
 
