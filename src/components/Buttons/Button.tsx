@@ -21,6 +21,7 @@ export interface ButtonProps {
   to?: string
   className?: string
   ref?: React.RefObject<HTMLButtonElement>
+  type?: 'button' | 'submit' | 'reset'
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -33,7 +34,8 @@ const Button: React.FC<ButtonProps> = ({
   to = '',
   onClick,
   className,
-  ref
+  ref,
+  type = 'button'
 }) => {
   const classNameValue = cn(
     // Base styles applied to all buttons
@@ -100,6 +102,7 @@ const Button: React.FC<ButtonProps> = ({
       disabled={disabled}
       onClick={handleClick}
       ref={ref}
+      type={type}
     >
       {children}
     </button>
