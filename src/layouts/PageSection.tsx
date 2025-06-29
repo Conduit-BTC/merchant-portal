@@ -10,7 +10,7 @@ interface PageSectionProps {
 
 const PageSection: React.FC<PageSectionProps> = ({
   children,
-  width = 'full',
+  width = 'narrow',
   gap = 'md',
   className,
   sectionClassName
