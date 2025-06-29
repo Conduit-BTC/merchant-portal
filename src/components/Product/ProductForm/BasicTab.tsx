@@ -38,7 +38,7 @@ const BasicTab = ({
         <Field
           label="Currency"
           name="price.currency"
-          type="select"
+          type="dropdown"
           value={formData.price.currency}
           onChange={handleChange}
           options={['USD', 'EUR', 'GBP', 'JPY', 'CAD', 'AUD', 'BTC', 'SAT']}
