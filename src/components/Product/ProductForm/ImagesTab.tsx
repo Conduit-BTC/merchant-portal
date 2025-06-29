@@ -1,4 +1,7 @@
-import { FormState } from '@/components/product/ProductForm'
+import { FormState } from '@/components/Product/ProductForm'
+import Field from '../../Form/Field'
+import Repeater from '../../Form/Repeater'
+import { useState } from 'react'
 
 type ImageEntry = FormState['images'][number]
 
@@ -13,11 +16,19 @@ const ImagesTab: React.FC<ImagesTabProps> = ({
   setFormData,
   errors
 }) => {
+  // Track input method for each image (url or file)
+  const [inputMethods, setInputMethods] = useState<
+    Record<number, 'url' | 'file'>
+  >({})
+
   const addImage = () => {
+    const newIndex = formData.images.length
     setFormData((prev) => ({
       ...prev,
       images: [...prev.images, { url: '', dimensions: '', order: undefined }]
     }))
+    // Default to URL input for new images
+    setInputMethods((prev) => ({ ...prev, [newIndex]: 'url' }))
   }
 
   const updateImage = (
@@ -46,74 +57,157 @@ const ImagesTab: React.FC<ImagesTabProps> = ({
       newImages.splice(index, 1)
       return { ...prev, images: newImages }
     })
+    // Clean up input method tracking
+    setInputMethods((prev) => {
+      const newMethods = { ...prev }
+      delete newMethods[index]
+      // Reindex remaining items
+      const reindexed: Record<number, 'url' | 'file'> = {}
+      Object.entries(newMethods).forEach(([key, value]) => {
+        const numKey = parseInt(key)
+        if (numKey > index) {
+          reindexed[numKey - 1] = value
+        } else {
+          reindexed[numKey] = value
+        }
+      })
+      return reindexed
+    })
+  }
+
+  const handleInputMethodChange = (index: number, method: 'url' | 'file') => {
+    setInputMethods((prev) => ({ ...prev, [index]: method }))
+    // Clear the URL when switching to file upload
+    if (method === 'file') {
+      updateImage(index, 'url', '')
+    }
+  }
+
+  const handleFileUpload = (index: number, file: File) => {
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      alert('Please select an image file')
+      return
+    }
+
+    // Validate file size (5MB limit)
+    if (file.size > 5 * 1024 * 1024) {
+      alert('File size must be less than 5MB')
+      return
+    }
+
+    // Convert file to data URL
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      const dataUrl = e.target?.result as string
+      updateImage(index, 'url', dataUrl)
+    }
+    reader.readAsDataURL(file)
   }
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center mb-2">
-        <label className="block text-sm font-medium text-gray-700">
-          Product Images
-        </label>
-        <button
-          type="button"
-          onClick={addImage}
-          className="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        >
-          Add Image
-        </button>
-      </div>
+      <Repeater
+        title="Product Images"
+        items={formData.images}
+        onAdd={addImage}
+        onRemove={removeImage}
+        addButtonText="Add Image"
+        emptyMessage="No images added yet."
+        renderItem={(image: any, index: number) => {
+          const inputMethod = inputMethods[index] || 'url'
 
-      <div className="grid grid-cols-1 gap-4">
-        {formData.images.map((image: any, index: number) => (
-          <div
-            key={index}
-            className="grid grid-cols-1 md:grid-cols-3 gap-4 items-start border p-4 rounded-md shadow-sm"
-          >
-            <div>
-              <label className="block text-sm font-medium">Image URL</label>
-              <input
-                type="text"
-                value={image.url}
-                onChange={(e) => updateImage(index, 'url', e.target.value)}
-                placeholder="Image URL"
-                className={`w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 ${
-                  errors[`image-${index}`] ? 'border-red-500' : ''
-                }`}
-              />
-              {errors[`image-${index}`] && (
-                <p className="mt-1 text-sm text-red-600">
-                  {errors[`image-${index}`]}
-                </p>
-              )}
-            </div>
+          return (
+            <div className="grid grid-cols-1 gap-4 pr-8">
+              {/* Input Method Selection */}
+              <div>
+                <label className="voice-sm font-bold mb-2 block">
+                  Image Source
+                </label>
+                <div className="flex gap-4">
+                  <label className="flex items-center">
+                    <input
+                      type="radio"
+                      name={`input-method-${index}`}
+                      value="url"
+                      checked={inputMethod === 'url'}
+                      onChange={() => handleInputMethodChange(index, 'url')}
+                      className="mr-2"
+                    />
+                    URL
+                  </label>
+                  <label className="flex items-center">
+                    <input
+                      type="radio"
+                      name={`input-method-${index}`}
+                      value="file"
+                      checked={inputMethod === 'file'}
+                      onChange={() => handleInputMethodChange(index, 'file')}
+                      className="mr-2"
+                    />
+                    Upload File
+                  </label>
+                </div>
+              </div>
 
-            <div>
-              <label className="block text-sm font-medium">Order</label>
-              <input
-                type="number"
-                value={image.order ?? ''}
-                onChange={(e) => updateImage(index, 'order', e.target.value)}
-                placeholder="Optional order"
-                className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-              />
-            </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 items-start gap-4">
+                {/* Image Input - URL or File */}
+                {inputMethod === 'url' ? (
+                  <Field
+                    label="Image URL"
+                    name={`image-url-${index}`}
+                    type="text"
+                    value={image.url}
+                    onChange={(e) =>
+                      updateImage(
+                        index,
+                        'url',
+                        (e.target as HTMLInputElement).value
+                      )
+                    }
+                    placeholder="https://example.com/image.jpg"
+                    error={errors[`image-${index}`]}
+                  />
+                ) : (
+                  <Field
+                    label="Upload Image"
+                    name={`image-file-${index}`}
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => {
+                      const file = (e.target as HTMLInputElement).files?.[0]
+                      if (file) {
+                        handleFileUpload(index, file)
+                      }
+                    }}
+                    error={errors[`image-${index}`]}
+                    help="Max size: 5MB. Supported formats: JPG, PNG, GIF, WebP"
+                  />
+                )}
 
-            <div className="md:col-span-3 text-right mt-2">
-              <button
-                type="button"
-                onClick={() => removeImage(index)}
-                className="text-sm text-red-600 hover:underline"
-              >
-                Remove
-              </button>
+                <Field
+                  label="Order"
+                  name={`image-order-${index}`}
+                  type="number"
+                  value={image.order ?? ''}
+                  onChange={(e) =>
+                    updateImage(
+                      index,
+                      'order',
+                      (e.target as HTMLInputElement).value
+                    )
+                  }
+                  placeholder="Optional order"
+                />
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          )
+        }}
+      />
 
       {formData.images.length > 0 && (
         <div className="mt-4">
-          <h3 className="text-sm font-medium text-gray-700 mb-2">Preview</h3>
+          <h3 className="voice-sm font-bold mb-2">Preview</h3>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {formData.images.map((image: any, index: number) => (
               <div
@@ -131,6 +225,11 @@ const ImagesTab: React.FC<ImagesTabProps> = ({
                         'data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22100%25%22%20height%3D%22100%25%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%20preserveAspectRatio%3D%22xMidYMid%22%3E%3Cpath%20fill%3D%22%23f3f4f6%22%20d%3D%22M0%200h100v100H0z%22%2F%3E%3Cpath%20fill%3D%22%23d1d5db%22%20d%3D%22M40%2035l20%2030l15-15l25%2030V0H0v80l25-25z%22%2F%3E%3Ccircle%20cx%3D%2275%22%20cy%3D%2225%22%20r%3D%228%22%20fill%3D%22%23d1d5db%22%2F%3E%3C%2Fsvg%3E'
                     }}
                   />
+                )}
+                {!image.url && (
+                  <div className="absolute inset-0 flex items-center justify-center text-gray-400 text-sm">
+                    No image
+                  </div>
                 )}
               </div>
             ))}
