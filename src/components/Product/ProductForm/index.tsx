@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { X } from 'lucide-react'
 import {
   ProductListing,
   ProductListingUtils,
@@ -9,13 +8,15 @@ import { useAccountStore } from '@/stores/useAccountStore'
 import DetailsTab from './DetailsTab'
 import BasicTab from './BasicTab'
 import ImagesTab from './ImagesTab'
-import FormActions from './FormActions'
-import TabNavigation from './TabNavigation'
 import ShippingTab from './ShippingTab'
 import Button from '@/components/Buttons/Button'
+import Icon from '@/components/Icon'
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/Tabs'
+import { cn } from '@/lib/utils'
 
 interface ProductFormProps {
   event?: ProductListing
+  mode: 'create' | 'edit'
   onSubmit: (tags: string[][], content: string) => Promise<void>
   onCancel: () => void
 }
@@ -93,7 +94,8 @@ const initialState: FormState = {
 const ProductForm: React.FC<ProductFormProps> = ({
   event,
   onSubmit,
-  onCancel
+  onCancel,
+  mode
 }) => {
   const { user } = useAccountStore()
   if (!user) throw new Error('[ProductForm]: Not logged in!')
@@ -105,6 +107,11 @@ const ProductForm: React.FC<ProductFormProps> = ({
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [currentTab, setCurrentTab] = useState('basic')
+
+  // Define tab order for navigation
+  const tabOrder = ['basic', 'details', 'images', 'shipping']
+  const currentTabIndex = tabOrder.indexOf(currentTab)
+  const isLastTab = currentTabIndex === tabOrder.length - 1
 
   // If an event is provided, populate form with its data
   useEffect(() => {
@@ -211,6 +218,12 @@ const ProductForm: React.FC<ProductFormProps> = ({
     return Object.keys(newErrors).length === 0
   }
 
+  const handleNext = () => {
+    if (currentTabIndex < tabOrder.length - 1) {
+      setCurrentTab(tabOrder[currentTabIndex + 1])
+    }
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
@@ -280,14 +293,18 @@ const ProductForm: React.FC<ProductFormProps> = ({
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => {
-    const { name, value } = e.target
+    const target = e.target as
+      | HTMLInputElement
+      | HTMLTextAreaElement
+      | HTMLSelectElement
+    const { name, value } = target
 
     if (name.includes('.')) {
       const [parent, child] = name.split('.')
       setFormData((prev) => ({
         ...prev,
         [parent]: {
-          ...prev[parent as keyof FormState],
+          ...(prev[parent as keyof FormState] as any),
           [child]: value
         }
       }))
@@ -300,54 +317,110 @@ const ProductForm: React.FC<ProductFormProps> = ({
   }
 
   return (
-    <div className="form-modal rounded-lg p-6 max-w-4xl mx-auto">
+    <div className="">
       <div className="absolute top-[-40px] right-10 z-[-1] pb-2 bg-accent rounded-t-full from-primary-800 to-accent/80 bg-gradient-to-t">
         <Button variant="ghost" size="icon">
-          <X />
+          <Icon.X />
         </Button>
       </div>
       <h2 className="attention-voice">
-        {event ? 'Edit Product' : 'Create New Product'}
+        {mode === 'edit' ? 'Edit Product' : 'Create New Product'}
       </h2>
 
-      <p className="solid-voice">{formData.id}</p>
+      <code className="solid-voice inline-block my-2">{formData.id}</code>
 
-      <TabNavigation currentTab={currentTab} setCurrentTab={setCurrentTab} />
+      <Tabs value={currentTab} onValueChange={setCurrentTab}>
+        <TabsList className="mb-6">
+          {tabOrder.map((tab) => (
+            <TabsTrigger
+              key={tab}
+              value={tab}
+              className={cn(
+                'voice-sm capitalize',
+                currentTab === tab && 'text-primary-500  font-bold underline'
+              )}
+            >
+              {tab}
+            </TabsTrigger>
+          ))}
+        </TabsList>
 
-      <form onSubmit={handleSubmit}>
-        {currentTab === 'basic' && (
-          <BasicTab
-            formData={formData}
-            handleChange={handleChange}
-            errors={errors}
-          />
-        )}
-        {currentTab === 'shipping' && (
-          <ShippingTab formData={formData} setFormData={setFormData} />
-        )}
-        {currentTab === 'details' && (
-          <DetailsTab
-            formData={formData}
-            setFormData={setFormData}
-            handleChange={handleChange}
-          />
-        )}
-        {currentTab === 'images' && (
-          <ImagesTab
-            formData={formData}
-            setFormData={setFormData}
-            errors={errors}
-          />
-        )}
+        <form onSubmit={handleSubmit}>
+          <TabsContent value="basic">
+            <BasicTab
+              formData={formData}
+              handleChange={handleChange}
+              errors={errors}
+            />
+          </TabsContent>
 
-        {/* Error message */}
-        {errors.submit && (
-          <div className="mt-4 text-sm text-red-600">{errors.submit}</div>
-        )}
+          <TabsContent value="shipping">
+            <ShippingTab formData={formData} setFormData={setFormData} />
+          </TabsContent>
 
-        {/* Form actions */}
-        <FormActions onCancel={onCancel} isSubmitting={isSubmitting} />
-      </form>
+          <TabsContent value="details">
+            <DetailsTab
+              formData={formData}
+              setFormData={setFormData}
+              handleChange={handleChange}
+            />
+          </TabsContent>
+
+          <TabsContent value="images">
+            <ImagesTab
+              formData={formData}
+              setFormData={setFormData}
+              errors={errors}
+            />
+          </TabsContent>
+
+          {/* Error message */}
+          {errors.submit && (
+            <div className="mt-4 text-sm text-red-600">{errors.submit}</div>
+          )}
+
+          {/* Form actions */}
+          <div className="mt-8 flex justify-end space-x-3">
+            <Button variant="outline" type="button" onClick={onCancel}>
+              Cancel
+            </Button>
+
+            {mode === 'create' ? (
+              // Create mode: Next/Create Product button
+              <Button
+                variant="primary"
+                type={isLastTab ? 'submit' : 'button'}
+                onClick={isLastTab ? undefined : handleNext}
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? (
+                  <>
+                    <Icon.Zap className="animate-spin" />
+                    Creating...
+                  </>
+                ) : (
+                  <>
+                    {isLastTab ? 'Create Product' : 'Next'}
+                    {!isLastTab && <Icon.ArrowRight />}
+                  </>
+                )}
+              </Button>
+            ) : (
+              // Edit mode: Update Product button
+              <Button variant="primary" type="submit" disabled={isSubmitting}>
+                {isSubmitting ? (
+                  <>
+                    <Icon.Zap className="animate-spin" />
+                    Updating...
+                  </>
+                ) : (
+                  'Update Product'
+                )}
+              </Button>
+            )}
+          </div>
+        </form>
+      </Tabs>
     </div>
   )
 }
