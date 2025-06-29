@@ -47,6 +47,7 @@ const ProductEditorLayout: React.FC = () => {
       <h1 className="loud-voice">Edit Product</h1>
       <ProductForm
         event={product}
+        mode="edit"
         onSubmit={handleSubmit}
         onCancel={handleCancel}
       />
