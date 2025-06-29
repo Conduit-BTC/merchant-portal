@@ -37,7 +37,8 @@ import {
   Share,
   Landmark,
   Home,
-  MessageCircle
+  MessageCircle,
+  Pin
 } from 'lucide-react'
 
 // Individual icon component interface
@@ -94,7 +95,8 @@ const Icon = {
   Share: createIconComponent(Share),
   Landmark: createIconComponent(Landmark),
   Home: createIconComponent(Home),
-  MessageCircle: createIconComponent(MessageCircle)
+  MessageCircle: createIconComponent(MessageCircle),
+  Pin: createIconComponent(Pin)
 }
 
 export default Icon
