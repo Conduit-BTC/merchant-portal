@@ -74,7 +74,7 @@ const DetailsTab = ({
         <Field
           label="Product Type"
           name="type.type"
-          type="select"
+          type="dropdown"
           value={formData.type.type}
           onChange={handleChange}
           options={[
@@ -87,7 +87,7 @@ const DetailsTab = ({
         <Field
           label="Physical Type"
           name="type.physicalType"
-          type="select"
+          type="dropdown"
           value={formData.type.physicalType}
           onChange={handleChange}
           options={[
@@ -101,7 +101,7 @@ const DetailsTab = ({
       <Field
         label="Visibility"
         name="visibility"
-        type="select"
+        type="dropdown"
         value={formData.visibility}
         onChange={handleChange}
         options={[
@@ -161,7 +161,7 @@ const DetailsTab = ({
             />
             <Field
               name="weight.unit"
-              type="select"
+              type="dropdown"
               value={formData.weight.unit}
               onChange={handleChange}
               options={['kg', 'g', 'lb', 'oz']}
@@ -185,7 +185,7 @@ const DetailsTab = ({
             />
             <Field
               name="dimensions.unit"
-              type="select"
+              type="dropdown"
               value={formData.dimensions.unit}
               onChange={handleChange}
               options={['cm', 'mm', 'in']}
