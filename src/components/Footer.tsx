@@ -1,197 +1,227 @@
-import React from 'react'
-import Button from './Buttons/Button'
-import { Heart } from 'lucide-react'
+import React from "react";
+import Button from "./Buttons/Button";
+import Icon from "@/components/Icon";
+import PageSection from "@/layouts/PageSection";
+import Logo from "@/components/Logo";
 
 interface NavLink {
-  name: string
-  link: string
+  name: string;
+  link: string;
 }
 
 interface NavSection {
-  heading: string
-  links: NavLink[]
+  heading: string;
+  links: NavLink[];
 }
 
 const navs: NavSection[] = [
   {
-    heading: 'Shop',
+    heading: "Shop",
     links: [
       {
-        name: 'All',
-        link: '/shop/all'
+        name: "All",
+        link: "/shop/all",
       },
       {
-        name: 'Categories',
-        link: '/shop/categories'
+        name: "Categories",
+        link: "/shop/categories",
       },
       {
-        name: 'Search',
-        link: '/shop/search'
+        name: "Search",
+        link: "/shop/search",
       },
       {
-        name: 'Trending',
-        link: '/shop/trending'
-      }
-    ]
+        name: "Trending",
+        link: "/shop/trending",
+      },
+    ],
   },
   {
-    heading: 'Sell',
+    heading: "Sell",
     links: [
       {
-        name: 'Your stores',
-        link: '/sell/stores'
+        name: "Your stores",
+        link: "/sell/stores",
       },
       {
-        name: 'Your products',
-        link: '/sell/products'
+        name: "Your products",
+        link: "/sell/products",
       },
       {
-        name: 'Manage store',
-        link: '/sell/manage'
+        name: "Manage store",
+        link: "/sell/manage",
       },
       {
-        name: 'Messages',
-        link: '/sell/messages'
-      }
-    ]
+        name: "Messages",
+        link: "/sell/messages",
+      },
+    ],
   },
   {
-    heading: 'For Sellers',
+    heading: "For Sellers",
     links: [
       {
-        name: 'Book a demo',
-        link: '/sellers/demo'
+        name: "Book a demo",
+        link: "/sellers/demo",
       },
       {
-        name: 'Create a store',
-        link: '/sellers/create'
+        name: "Create a store",
+        link: "/sellers/create",
       },
       {
-        name: 'Features',
-        link: '/sellers/features'
+        name: "Features",
+        link: "/sellers/features",
       },
       {
-        name: 'Why Conduit',
-        link: '/sellers/why-conduit'
+        name: "Why Conduit",
+        link: "/sellers/why-conduit",
       },
       {
-        name: 'FAQ',
-        link: '/sellers/faq'
-      }
-    ]
+        name: "FAQ",
+        link: "/sellers/faq",
+      },
+    ],
   },
   {
-    heading: 'For Shoppers',
+    heading: "For Shoppers",
     links: [
       {
-        name: 'Join waitlist',
-        link: '/shoppers/waitlist'
+        name: "Join waitlist",
+        link: "/shoppers/waitlist",
       },
       {
-        name: 'Features',
-        link: '/shoppers/features'
+        name: "Features",
+        link: "/shoppers/features",
       },
       {
-        name: 'Why Conduit',
-        link: '/shoppers/why-conduit'
+        name: "Why Conduit",
+        link: "/shoppers/why-conduit",
       },
       {
-        name: 'About us',
-        link: '/shoppers/about'
+        name: "About us",
+        link: "/shoppers/about",
       },
       {
-        name: 'FAQ',
-        link: '/shoppers/faq'
-      }
-    ]
+        name: "FAQ",
+        link: "/shoppers/faq",
+      },
+    ],
   },
   {
-    heading: 'You',
+    heading: "Site Map",
     links: [
       {
-        name: 'Your profile',
-        link: '/profile'
+        name: "Home",
+        link: "/",
       },
       {
-        name: 'Settings',
-        link: '/settings'
+        name: "Style Guide",
+        link: "/style-guide",
       },
       {
-        name: 'Link Twenty Three',
-        link: '/link-23'
+        name: "How it Works",
+        link: "/how-it-works",
       },
       {
-        name: 'Link Twenty Four',
-        link: '/link-24'
+        name: "Auth",
+        link: "/auth",
       },
       {
-        name: 'Link Twenty Five',
-        link: '/link-25'
-      }
-    ]
-  }
-]
+        name: "List of Merchants",
+        link: "/merchants",
+      },
+      {
+        name: "List of Merchant Products",
+        link: "/merchant/conduit",
+      },
+      {
+        name: "List of Categories",
+        link: "/categories",
+      },
+      {
+        name: "List of Products in a Category",
+        link: "/category/Drinks",
+      },
+      {
+        name: "Product Detail Page",
+        link: "/product/123",
+      },
+      {
+        name: "List of Carts",
+        link: "/carts",
+      },
+      {
+        name: "Merchant Cart",
+        link: "/cart/conduit",
+      },
+      {
+        name: "Profile",
+        link: "/profile",
+      },
+      {
+        name: "Orders",
+        link: "/profile/orders",
+      },
+      {
+        name: "Zapout",
+        link: "/zapout",
+      },
+    ],
+  },
+];
 
 const socials = [
   {
-    name: 'GitHub',
-    link: '#',
-    icon: 'github'
+    name: "GitHub",
+    link: "#",
+    icon: "github",
   },
   {
-    name: 'Facebook',
-    link: '#',
-    icon: 'facebook'
+    name: "Facebook",
+    link: "#",
+    icon: "facebook",
   },
   {
-    name: 'Instagram',
-    link: '#',
-    icon: 'instagram'
+    name: "Instagram",
+    link: "#",
+    icon: "instagram",
   },
   {
-    name: 'X',
-    link: '#',
-    icon: 'x'
+    name: "X",
+    link: "#",
+    icon: "x",
   },
   {
-    name: 'LinkedIn',
-    link: '#',
-    icon: 'linkedin'
-  }
-]
+    name: "LinkedIn",
+    link: "#",
+    icon: "linkedin",
+  },
+];
 
 const legalLinks = [
   {
-    name: 'Privacy Policy',
-    link: '/privacy'
+    name: "Privacy Policy",
+    link: "/privacy",
   },
   {
-    name: 'Terms of Service',
-    link: '/terms'
+    name: "Terms of Service",
+    link: "/terms",
   },
   {
-    name: 'Cookies Settings',
-    link: '/cookies'
-  }
-]
+    name: "Cookies Settings",
+    link: "/cookies",
+  },
+];
 
 const Footer = () => {
   return (
-    <footer className="bg-paper overflow-hidden w-full">
-      <section className="links">
-        <div className="inner-column wide pt-12 grid gap-8 grid-cols-[repeat(auto-fill,minmax(200px,1fr))]">
-          <picture className="max-w-50">
-            <img
-              src={
-                new URL('@/assets/images/logo/logo-full.svg', import.meta.url)
-                  .href
-              }
-              alt="Conduit Market"
-            />
-          </picture>
+    <footer className="bg-paper overflow-hidden mt-10">
+      <PageSection width="wide">
+        <div className=" pt-12 grid gap-8 grid-cols-[repeat(auto-fill,minmax(200px,1fr))]">
+          <Logo className="max-w-50" />
           {navs.map((nav) => (
             <nav key={nav.heading}>
-              <h3 className="calm-voice font-bold">{nav.heading}</h3>
+              <h3 className="voice-base font-bold">{nav.heading}</h3>
               <ul className="mt-4 grid gap-1 justify-start">
                 {nav.links.map((link) => (
                   <li key={link.name}>
@@ -211,12 +241,12 @@ const Footer = () => {
             </nav>
           ))}
         </div>
-      </section>
+      </PageSection>
 
-      <section className="legal-social">
-        <div className="inner-column wide border-t border-base py-8 flex flex-col md:flex-row justify-between items-center">
+      <PageSection width="wide">
+        <div className="border-t border-muted py-8 flex flex-col md:flex-row justify-between items-center">
           <div className="legal flex items-center flex-wrap gap-4">
-            <span className="whisper-voice">
+            <span className="voice-sm text-muted-foreground">
               © 2025 Conduit. All rights reserved.
             </span>
             {legalLinks.map((link) => (
@@ -245,14 +275,14 @@ const Footer = () => {
                 to={social.link}
                 rounded={false}
               >
-                <Heart />
+                <Icon.Heart />
               </Button>
             ))}
           </div>
         </div>
-      </section>
+      </PageSection>
     </footer>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

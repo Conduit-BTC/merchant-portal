@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
   /* Main color palette */
@@ -86,7 +86,7 @@ h6,
 /* Primary buttons */
 .bg-indigo-600,
 .bg-indigo-500,
-button[type="submit"],
+button[type='submit'],
 .text-white.bg-indigo-600 {
   background-color: var(--accent-primary) !important;
   color: white !important;
@@ -95,7 +95,7 @@ button[type="submit"],
 
 .bg-indigo-600:hover,
 .bg-indigo-500:hover,
-button[type="submit"]:hover,
+button[type='submit']:hover,
 .hover\:bg-indigo-700:hover {
   background-color: var(--accent-primary-hover) !important;
   border-color: var(--accent-primary-hover) !important;
@@ -141,7 +141,7 @@ textarea:focus,
 
 /* Search box */
 .search-box,
-[type="search"] {
+[type='search'] {
   background-color: var(--dark-surface-lighter) !important;
   color: var(--dark-text-primary) !important;
   border-color: var(--dark-border) !important;
