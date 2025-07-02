@@ -1,6 +1,15 @@
 /* Colors */
 @layer base {
   :root {
+    --dashed-border: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' stroke='hsl(281, 16%, 65%)' stroke-width='7' stroke-dasharray='6%2c 30' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+
+    --dashed-border-rounded: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='100' ry='100' stroke='hsl(281, 16%, 65%)' stroke-width='7' stroke-dasharray='6%2c 29' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+
+    --base-radius: 0.625rem;
+  }
+
+  /* colors */
+  :root {
     /* Base HSL values */
     --base-h: 255;
     --base-s: 8%;
@@ -155,6 +164,9 @@
 }
 
 @theme {
+  /* breakpoints */
+  --breakpoint-3xl: 120rem;
+
   /* typography */
   /* Font families */
   --font-display: 'Whyte Inktrap Variable', system-ui, sans-serif;
@@ -165,11 +177,22 @@
   --font-secondary: var(--font-display);
 
   /* Line heights */
+
   --leading-tight: 1.2;
+  --leading-snug: 1.35;
   --leading-normal: 1.5;
-  --leading-relaxed: 1.75;
+  --leading-relaxed: 1.625;
 
   /* Border radius */
+
+  --radius-xs: calc(var(--base-radius) - 4px);
+  --radius-sm: calc(var(--base-radius) - 2px);
+  --radius-md: var(--base-radius);
+  --radius-lg: calc(var(--base-radius) + 4px);
+  --radius-xl: calc(var(--base-radius) + 8px);
+  --radius-2xl: calc(var(--base-radius) + 16px);
+  --radius-3xl: calc(var(--base-radius) + 24px);
+  --radius-4xl: calc(var(--base-radius) + 32px);
 
   /* Transitions */
   --transition-fast: 150ms ease;
@@ -183,9 +206,6 @@
 
   --color-paper: var(--accent-950);
   --color-ink: var(--base-100);
-
-  --color-background: var(--color-paper);
-  --color-foreground: var(--color-ink);
 
   /*  */
 
@@ -259,7 +279,7 @@
   --color-accent-foreground: var(--accent-200);
 
   --color-muted: var(--base-800);
-  --color-muted-foreground: var(--base-200);
+  --color-muted-foreground: var(--base-300);
 
   /* static colors */
   --color-destructive: hsla(0, 100%, var(--status-lightness), 1);
@@ -296,16 +316,55 @@
 
   /* Shadows */
 
-  --text-shadow:
-    0 0 0.625em var(--color-primary-500), 0 0 1.25em var(--color-primary-400),
-    0 0 2.5em var(--color-primary-300), 0 0 5em var(--color-primary-200);
+  --shadow-primary: 0 0 0.625em var(--color-primary-500),
+    0 0 1.25em var(--color-primary-400), 0 0 2.5em var(--color-primary-300),
+    0 0 5em var(--color-primary-200);
 
-  --shadow-border-glow:
-    0 0 0.1rem var(--color-ink), 0 0 0.1rem var(--color-ink),
+  --shadow-border-glow: 0 0 0.1rem var(--color-ink), 0 0 0.1rem var(--color-ink),
     0 0 1rem var(--tw-shadow-color), 0 0 0.1rem var(--tw-shadow-color),
     0 0 0.15rem var(--tw-shadow-color), inset 0 0 0.2rem var(--tw-shadow-color);
 
   /* Borders */
 
   /* animations #todo*/
+}
+
+/* shadcn */
+@theme inline {
+  --color-background: var(--color-paper);
+  --color-foreground: var(--color-ink);
+
+  /* card */
+  --color-card: var(--primary-950);
+  --color-card-foreground: var(--color-ink);
+
+  /* popover */
+  --color-popover: var(--primary-950);
+  --color-popover-foreground: var(--color-ink);
+
+  /* sidebar */
+  --color-sidebar: var(--primary-950);
+  --color-sidebar-foreground: var(--color-ink);
+
+  /*  */
+  --color-sidebar-primary: var(--color-primary-700);
+  --color-sidebar-primary-foreground: var(--color-primary-foreground);
+  --color-sidebar-secondary: var(--color-secondary-700);
+  --color-sidebar-secondary-foreground: var(--color-secondary-foreground);
+  --color-sidebar-accent: var(--color-accent-700);
+  --color-sidebar-accent-foreground: var(--color-accent-foreground);
+
+  /*  */
+  --color-border: var(--color-muted);
+  --color-input: var(--color-muted);
+  --color-ring: var(--color-muted);
+  --color-sidebar-border: var(--color-muted);
+  --color-sidebar-ring: var(--color-muted);
+
+  /* chart */
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
 }

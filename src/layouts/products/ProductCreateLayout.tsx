@@ -1,9 +1,9 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { useLocation } from "wouter";
-import ProductForm from "@/components/Product/ProductForm";
-import { useProductStore } from "@/stores/useProductStore";
-import { ProductListing } from "nostr-commerce-schema";
-import { v4 as uuidv4 } from "uuid";
+import React, { useEffect, useMemo, useState } from 'react'
+import { useLocation } from 'wouter'
+import ProductForm from '@/components/Product/ProductForm'
+import { useProductStore } from '@/stores/useProductStore'
+import { ProductListing } from 'nostr-commerce-schema'
+import { v4 as uuidv4 } from 'uuid'
 
 const useSampleProduct = () => {
     const id = `product_id_${uuidv4()}`;
@@ -27,77 +27,76 @@ const useSampleProduct = () => {
 };
 
 const ProductCreateLayout: React.FC = () => {
-    const { createProduct } = useProductStore();
-    const sampleProduct = useSampleProduct();
-    const [productData, setProductData] = useState<ProductListing | undefined>();
-    const [, navigate] = useLocation();
-    const [submitting, setSubmitting] = useState(false);
+  const { createProduct } = useProductStore()
+  const sampleProduct = useSampleProduct()
+  const [productData, setProductData] = useState<ProductListing | undefined>()
+  const [, navigate] = useLocation()
+  const [submitting, setSubmitting] = useState(false)
 
-    // Auto-fill sample data if ?sample=true
-    useEffect(() => {
-        const searchParams = new URLSearchParams(window.location.search);
-        if (searchParams.get("sample") === "true") {
-            setProductData(sampleProduct);
-        }
-    }, [sampleProduct]);
+  // Auto-fill sample data if ?sample=true
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search)
+    if (searchParams.get('sample') === 'true') {
+      setProductData(sampleProduct)
+    }
+  }, [sampleProduct])
 
+  const handleFillSample = () => {
+    setProductData(sampleProduct)
+  }
 
-    const handleFillSample = () => {
-        setProductData(sampleProduct);
-    };
+  const handleSubmit = async (tags: string[][], content: string) => {
+    console.log('🧪 Tags received from form:', tags)
+    setSubmitting(true)
+    try {
+      await createProduct({
+        kind: 30402,
+        tags,
+        content
+      })
+      navigate('/products')
+    } catch (err) {
+      console.error('❌ Failed to create product:', err)
+      // TODO: Add user-facing error message
+    } finally {
+      setSubmitting(false)
+    }
+  }
 
-    const handleSubmit = async (tags: string[][], content: string) => {
-        console.log("🧪 Tags received from form:", tags);
-        setSubmitting(true);
-        try {
-            await createProduct({
-                kind: 30402,
-                tags,
-                content,
-            });
-            navigate("/products");
-        } catch (err) {
-            console.error("❌ Failed to create product:", err);
-            // TODO: Add user-facing error message
-        } finally {
-            setSubmitting(false);
-        }
-    };
+  const handleCancel = () => {
+    setProductData(undefined)
+    navigate('/products')
+  }
 
-    const handleCancel = () => {
-        setProductData(undefined);
-        navigate("/products");
-    };
+  return (
+    <div className="mx-auto px-4 py-8">
+      <h1 className="loud-voice">Create Product</h1>
+      <div className="flex justify-between items-center mb-4">
+        <button
+          onClick={handleFillSample}
+          className="btn-secondary"
+          disabled={submitting}
+          style={'background: red'}
+        >
+          Fill with Sample Data
+        </button>
+      </div>
 
-    return (
-        <div className="mx-auto px-4 py-8">
-            <h1 className="loud-voice">Create Product</h1>
-            <div className="flex justify-between items-center mb-4">
-                <button
-                    onClick={handleFillSample}
-                    className="btn-secondary"
-                    disabled={submitting}
-                    style={'background: red'}
-                >
-                    Fill with Sample Data
-                </button>
-            </div>
+      <ProductForm
+        key={productData ? productData.created_at : 'new-product-form'}
+        event={productData}
+        onSubmit={handleSubmit}
+        onCancel={handleCancel}
+        disabled={submitting}
+      />
 
-            <ProductForm
-                key={productData ? productData.created_at : "new-product-form"}
-                event={productData}
-                onSubmit={handleSubmit}
-                onCancel={handleCancel}
-                disabled={submitting}
-            />
-
-            {submitting && (
-                <div className="text-center mt-4 text-sm text-gray-600">
-                    Submitting product...
-                </div>
-            )}
+      {submitting && (
+        <div className="text-center mt-4 text-sm text-gray-600">
+          Submitting product...
         </div>
-    );
-};
+      )}
+    </div>
+  )
+}
 
-export default ProductCreateLayout;
+export default ProductCreateLayout
