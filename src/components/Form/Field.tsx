@@ -8,8 +8,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuTrigger,
-  DropdownMenuCheckboxItem
+  DropdownMenuTrigger
 } from './Dropdown'
 
 // Tag component for displaying selected items in tags mode
