@@ -16,11 +16,12 @@ export interface ButtonProps {
   rounded?: boolean
   disabled?: boolean
   children: React.ReactNode
-  onClick?: () => void
+  onClick?: (e?: React.MouseEvent<HTMLButtonElement>) => void
   isLink?: boolean
   to?: string
   className?: string
   ref?: React.RefObject<HTMLButtonElement>
+  type?: 'button' | 'submit' | 'reset'
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -33,7 +34,8 @@ const Button: React.FC<ButtonProps> = ({
   to = '',
   onClick,
   className,
-  ref
+  ref,
+  type = 'button'
 }) => {
   const classNameValue = cn(
     // Base styles applied to all buttons
@@ -88,12 +90,19 @@ const Button: React.FC<ButtonProps> = ({
       </Link>
     )
   }
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    //  e.preventDefault()
+    onClick?.(e)
+  }
+
   return (
     <button
       className={classNameValue}
       disabled={disabled}
-      onClick={onClick}
+      onClick={handleClick}
       ref={ref}
+      type={type}
     >
       {children}
     </button>
