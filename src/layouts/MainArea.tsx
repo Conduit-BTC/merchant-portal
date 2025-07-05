@@ -12,7 +12,6 @@ import PendingOrdersLayout from "./orders/PendingOrdersLayout";
 import FailedOrdersLayout from "./orders/FailedOrdersLayout";
 import CancelledOrdersLayout from "./orders/CancelledOrdersLayout";
 import CreateNewOrderLayout from "./orders/CreateNewOrderLayout";
-
 import NotFoundPage from "./NotFoundPage";
 
 const MainArea = () => {
@@ -54,3 +53,4 @@ const WrappedNotFoundPage = () => {
 };
 
 export default MainArea;
+
