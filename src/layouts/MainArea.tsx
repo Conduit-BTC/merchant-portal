@@ -14,6 +14,7 @@ import CancelledOrdersLayout from "./orders/CancelledOrdersLayout";
 import CreateNewOrderLayout from "./orders/CreateNewOrderLayout";
 import Breadcrumbs from '@/components/Breadcrumbs'
 import { useBreadcrumbItems } from '../hooks/useBreadcrumbItems'
+import NotFoundPage from "./NotFoundPage";
 
 const MainArea = () => {
       const items = useBreadcrumbItems({
@@ -45,9 +46,20 @@ const MainArea = () => {
                     <Route path="/cancelled" component={CancelledOrdersLayout} />
                     <Route path="/create" component={CreateNewOrderLayout} />
                 </Route>
+					 <Route path="/:rest*">
+               	 <WrappedNotFoundPage />
+           		 </Route>
             </Switch>
-        </main>
-    )
+   	 </main>
+  )
+}
+//fixme temporary solution till routes are better managed
+const WrappedNotFoundPage = () => {
+  return (
+    <div className="fixed inset-0 overflow-hidden bg-paper z-999">
+      <NotFoundPage />
+    </div>
+  )
 }
 
 export default MainArea;
