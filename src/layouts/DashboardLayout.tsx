@@ -19,6 +19,7 @@ import {
 import Header from '@/components/Header'
 import { useState } from 'react'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
+import Button from '@/components/Buttons/Button'
 
 // Navigation data for merchant portal
 const navData = [
@@ -94,10 +95,10 @@ function SimpleSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               {pinnedItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <a href={item.url}>
+                    <Button to={item.url} variant="link" isLink className="text-left justify-start">
                       <item.icon className="shrink-0" />
                       <span>{item.title}</span>
-                    </a>
+                    </Button>
                   </SidebarMenuButton>
                   <SidebarMenuAction
                     onClick={() => togglePin(item.title)}
@@ -125,10 +126,10 @@ function SimpleSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 {group.items.map((item) => (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton asChild>
-                      <a href={item.url}>
+                      <Button to={item.url} variant="link" isLink className="text-left justify-start">
                         <item.icon className="shrink-0" />
                         <span>{item.title}</span>
-                      </a>
+                      </Button>
                     </SidebarMenuButton>
                     {group.title !== 'Quick Actions' && (
                       <SidebarMenuAction
