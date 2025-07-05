@@ -1,20 +1,19 @@
-import { Route, Switch } from 'wouter'
-import ProductsLayout from './products/ProductsLayout'
-import ProductCreateLayout from './products/ProductCreateLayout'
-import RelayPoolsLayout from './store/RelayPoolsLayout'
-import ShippingOptionsLayout from './store/shipping/ShippingOptionsLayout'
-import ProductEditorLayout from './products/ProductEditorLayout'
-import StoreProfileLayout from './store/StoreProfileLayout'
-import StoreProfileEditLayout from './store/StoreProfileEditLayout'
-import CheckoutSettingsLayout from './store/CheckoutSettingsLayout'
-import CompletedOrdersLayout from './orders/CompletedOrdersLayout'
-import PendingOrdersLayout from './orders/PendingOrdersLayout'
-import FailedOrdersLayout from './orders/FailedOrdersLayout'
-import CancelledOrdersLayout from './orders/CancelledOrdersLayout'
-import CreateNewOrderLayout from './orders/CreateNewOrderLayout'
-import StyleGuidePage from '@/layouts/StyleGuide'
+import { Route, Switch } from "wouter";
+import ProductsLayout from "./products/ProductsLayout";
+import ProductCreateLayout from "./products/ProductCreateLayout";
+import RelayPoolsLayout from "./store/RelayPoolsLayout";
+import ShippingOptionsLayout from "./store/shipping/ShippingOptionsLayout";
+import ProductEditorLayout from "./products/ProductEditorLayout";
+import StoreProfileLayout from "./store/StoreProfileLayout";
+import StoreProfileEditLayout from "./store/StoreProfileEditLayout";
+import CheckoutSettingsLayout from "./store/CheckoutSettingsLayout";
+import CompletedOrdersLayout from "./orders/CompletedOrdersLayout";
+import PendingOrdersLayout from "./orders/PendingOrdersLayout";
+import FailedOrdersLayout from "./orders/FailedOrdersLayout";
+import CancelledOrdersLayout from "./orders/CancelledOrdersLayout";
+import CreateNewOrderLayout from "./orders/CreateNewOrderLayout";
 
-import NotFoundPage from './NotFoundPage'
+import NotFoundPage from "./NotFoundPage";
 
 const MainArea = () => {
   return (
@@ -38,21 +37,20 @@ const MainArea = () => {
           <Route path="/cancelled" component={CancelledOrdersLayout} />
           <Route path="/create" component={CreateNewOrderLayout} />
         </Route>
-        <Route path="/style-guide" component={StyleGuidePage} />
         <Route path="/:rest*">
           <WrappedNotFoundPage />
         </Route>
       </Switch>
     </>
-  )
-}
+  );
+};
 //fixme temporary solution till routes are better managed
 const WrappedNotFoundPage = () => {
   return (
     <div className="fixed inset-0 overflow-hidden bg-paper z-999">
       <NotFoundPage />
     </div>
-  )
-}
+  );
+};
 
-export default MainArea
+export default MainArea;
