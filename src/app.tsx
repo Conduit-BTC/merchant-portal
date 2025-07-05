@@ -5,6 +5,8 @@ import AuthPage from './layouts/login/AuthPage.tsx'
 import SimpleLayout from './layouts/SimpleLayout.tsx'
 import DashboardLayout from './layouts/DashboardLayout.tsx'
 
+console.log('delete me')
+
 export function App() {
   const { isLoggedIn, user } = useAccountStore()
 
