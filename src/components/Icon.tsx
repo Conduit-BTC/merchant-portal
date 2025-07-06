@@ -34,6 +34,7 @@ import {
   LucideShieldCheck,
   Link,
   PhoneCall,
+  Pencil,
   Share,
   Landmark,
   Home,
@@ -96,7 +97,8 @@ const Icon = {
   Landmark: createIconComponent(Landmark),
   Home: createIconComponent(Home),
   MessageCircle: createIconComponent(MessageCircle),
-  Pin: createIconComponent(Pin)
+  Pin: createIconComponent(Pin),
+  Pencil: createIconComponent(Pencil)
 }
 
 export default Icon
