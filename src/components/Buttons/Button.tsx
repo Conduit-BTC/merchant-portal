@@ -39,34 +39,34 @@ const Button: React.FC<ButtonProps> = ({
 }) => {
   const classNameValue = cn(
     // Base styles applied to all buttons
-    'flex items-center gap-2 justify-center font-bold transition-colors focus:outline-hidden focus:ring-2 focus:ring-offset-2 whitespace-nowrap flex-shrink-0',
+    'flex items-center gap-2 justify-center font-bold transition-colors focus:outline-hidden focus:scale-102 active:scale-95 transition-all duration-100 whitespace-nowrap flex-shrink-0',
     {
       // Primary variant - Solid background with primary color
-      'bg-primary-500 text-primary-foreground hover:bg-primary-600 focus:ring-primary':
+      'bg-primary-500 text-primary-foreground hover:bg-primary-600':
         variant === 'primary',
       // Secondary variant - Muted background with subtle hover effect
-      'bg-secondary text-secondary-foreground hover:bg-secondary-foreground/10 focus:ring-secondary':
+      'bg-secondary text-secondary-foreground hover:bg-secondary-foreground/10':
         variant === 'secondary',
       // Muted variant - Muted background with subtle hover effect
-      'bg-muted text-muted-foreground hover:bg-muted/80 focus:ring-muted':
+      'bg-muted text-muted-foreground hover:bg-muted/80':
         variant === 'muted',
       // Ink variant - Muted background with subtle hover effect
-      'bg-ink text-paper hover:bg-paper hover:text-ink focus:ring-ink':
+      'bg-ink text-paper hover:bg-paper hover:text-ink':
         variant === 'ink',
       // Outline variant - Bordered button with transparent background
-      'border-2 border-ink-500 text-ink-foreground hover:bg-ink/20 focus:ring-ink':
+      'border-2 border-ink-500 text-ink-foreground hover:bg-ink/20':
         variant === 'outline',
       // Accent variant - Special emphasis button
-      'bg-accent text-accent-foreground hover:bg-accent/90 focus:ring-accent':
+      'bg-accent text-accent-foreground hover:bg-accent/90':
         variant === 'accent',
       // Ghost variant - Transparent button that shows background on hover
-      'bg-transparent text-ink-foreground hover:bg-ink/20 focus:ring-ink':
+      'bg-transparent text-ink-foreground hover:bg-ink/20':
         variant === 'ghost',
       // Destructive variant - Used for delete/remove actions
-      'bg-destructive text-destructive-foreground hover:bg-destructive/90 focus:ring-destructive':
+      'bg-destructive text-destructive-foreground hover:bg-destructive/90':
         variant === 'destructive',
       // Link variant - Appears as a text link with hover underline
-      'text-ink-foreground font-medium hover:text-ink-foreground/80 hover:underline focus:ring-0 ':
+      'text-ink-foreground font-medium hover:text-ink-foreground/80 hover:underline':
         variant === 'link',
       // Size variants
       'px-3 py-1.5 text-sm': size === 'sm', // Small size
