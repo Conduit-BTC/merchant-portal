@@ -21,7 +21,8 @@ const MainArea = () => {
     <>
       <Switch>
         <Route path="/store" nest>
-          <Route path="/" component={StoreProfileLayout} />
+          {/* #fixme: home redirects to products temp. <Route path="/" component={StoreProfileLayout} /> */ }
+          <Route path="/" component={ProductsLayout} />
           <Route path="/relays" component={RelayPoolsLayout} />
           <Route path="/shipping" component={ShippingOptionsLayout} />
           <Route path="/checkout" component={CheckoutSettingsLayout} />
