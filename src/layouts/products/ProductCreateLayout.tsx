@@ -85,7 +85,7 @@ const ProductCreateLayout: React.FC = () => {
           disabled={submitting}
           size="sm"
           variant="outline"
-		  className="border-secondary"
+          className="border-secondary"
         >
           Fill with Sample Data
         </Button>
