@@ -49,8 +49,8 @@ const Header: React.FC = () => {
     <header className="relative bg-sidebar">
       <PageSection className="p-4" width="full">
         <div className="flex justify-between items-center gap-4">
-          <div className="flex items-end gap-1">
-            <Logo className="max-w-8" variant="icon" />
+          <div className="grid gap-1">
+            <Logo className="max-w-50" variant="full" />
             <Breadcrumbs items={items} />
           </div>
           {/* <MobileMenu /> */}
