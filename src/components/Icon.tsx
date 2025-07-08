@@ -34,13 +34,38 @@ import {
   LucideShieldCheck,
   Link,
   PhoneCall,
-  Pencil,
   Share,
   Landmark,
   Home,
-  MessageCircle,
-  Pin
+  MessageCircle
 } from 'lucide-react'
+import { cn } from '@/lib/utils'
+
+// custom icon components
+const SatoshiIcon: React.ComponentType<any> = ({
+  className,
+  fill
+}: IconProps) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 10 17"
+    fill={fill}
+    className={cn(className)}
+    strokeWidth={1}
+    stroke="currentColor"
+  >
+    {/* Top vertical line */}
+    <rect x="4.25" y="0" width="1.5" height="2.5" />
+    {/* Top horizontal line */}
+    <rect x="0" y="4.25" width="10" height="1.5" />
+    {/* Middle horizontal line */}
+    <rect x="0" y="7.25" width="10" height="1.5" />
+    {/* Bottom horizontal line */}
+    <rect x="0" y="10.25" width="10" height="1.5" />
+    {/* Bottom vertical line */}
+    <rect x="4.25" y="13.5" width="1.5" height="2.5" />
+  </svg>
+)
 
 // Individual icon component interface
 interface IconProps {
@@ -97,8 +122,7 @@ const Icon = {
   Landmark: createIconComponent(Landmark),
   Home: createIconComponent(Home),
   MessageCircle: createIconComponent(MessageCircle),
-  Pin: createIconComponent(Pin),
-  Pencil: createIconComponent(Pencil)
+  Satoshi: createIconComponent(SatoshiIcon)
 }
 
 export default Icon
