@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite'
 import preact from '@preact/preset-vite'
-import path, { resolve } from 'node:path'
+import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import tailwindcss from '@tailwindcss/vite'
 
@@ -12,11 +12,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
-      '@root': path.resolve(__dirname, '.'),
-      'nostr-commerce-schema': resolve(
-        __dirname,
-        'external/nostr-commerce-schema'
-      )
+      '@root': path.resolve(__dirname, '.')
     }
   }
 })

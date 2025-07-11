@@ -4,9 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "bun run build:schema && vite",
-    "build": "bun run build:schema && vite build",
-    "build:schema": "cd external/nostr-commerce-schema && bun run build",
+    "dev": "vite",
+    "build": "vite build",
     "preview": "vite preview",
     "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,css,json,md}\" \"*.{ts,tsx,js,jsx,css,json,md}\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,css,json,md}\" \"*.{ts,tsx,js,jsx,css,json,md}\""
@@ -22,7 +21,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.469.0",
-    "nostr-commerce-schema": "file:external/nostr-commerce-schema",
+    "nostr-commerce-schema": "^1.0.0",
     "preact": "^10.19.6",
     "react-hook-form": "^7.59.0",
     "tailwind-merge": "^3.3.0",
