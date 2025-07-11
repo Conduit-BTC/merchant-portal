@@ -15,33 +15,51 @@ import CreateNewOrderLayout from './orders/CreateNewOrderLayout'
 import StyleGuidePage from '@/layouts/StyleGuide'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import { useBreadcrumbItems } from '../hooks/useBreadcrumbItems'
+import NotFoundPage from "./NotFoundPage";
 
 const MainArea = () => {
+  const items = useBreadcrumbItems({
+    labelMap: {
+      store: 'Store',
+      products: 'My Products',
+      create: 'Create Product',
+    },
+  })
+    return (
+        <main className='p-4'>
+            <Breadcrumbs items={items} />
+            <Switch>
+                <Route path="/store" nest>
+                    <Route path="/" component={StoreProfileLayout} />
+                    <Route path="/relays" component={RelayPoolsLayout} />
+                    <Route path="/shipping" component={ShippingOptionsLayout} />
+                    <Route path="/checkout" component={CheckoutSettingsLayout} />
+                    <Route path="/store" component={StoreProfileLayout} />
+                    <Route path="/store/edit" component={StoreProfileEditLayout} />
+                </Route>
+                <Route path="/products/create" component={ProductCreateLayout} />
+                <Route path="/products/edit/:id" component={ProductEditorLayout} />
+                <Route path="/products" component={ProductsLayout} />
+                <Route path="/orders" nest>
+                    <Route path="/completed" component={CompletedOrdersLayout} />
+                    <Route path="/pending" component={PendingOrdersLayout} />
+                    <Route path="/failed" component={FailedOrdersLayout} />
+                    <Route path="/cancelled" component={CancelledOrdersLayout} />
+                    <Route path="/create" component={CreateNewOrderLayout} />
+                </Route>
+					 <Route path="/:rest*">
+               	 <WrappedNotFoundPage />
+           		 </Route>
+            </Switch>
+   	 </main>
+  )
+}
+        
+const WrappedNotFoundPage = () => {
   return (
-    <>
-      <Switch>
-        <Route path="/store" nest>
-          {/* #fixme: home redirects to products temp. <Route path="/" component={StoreProfileLayout} /> */ }
-          <Route path="/" component={ProductsLayout} />
-          <Route path="/relays" component={RelayPoolsLayout} />
-          <Route path="/shipping" component={ShippingOptionsLayout} />
-          <Route path="/checkout" component={CheckoutSettingsLayout} />
-          <Route path="/store" component={StoreProfileLayout} />
-          <Route path="/store/edit" component={StoreProfileEditLayout} />
-        </Route>
-        <Route path="/products/create" component={ProductCreateLayout} />
-        <Route path="/products/edit/:id" component={ProductEditorLayout} />
-        <Route path="/products" component={ProductsLayout} />
-        <Route path="/orders" nest>
-          <Route path="/completed" component={CompletedOrdersLayout} />
-          <Route path="/pending" component={PendingOrdersLayout} />
-          <Route path="/failed" component={FailedOrdersLayout} />
-          <Route path="/cancelled" component={CancelledOrdersLayout} />
-          <Route path="/create" component={CreateNewOrderLayout} />
-        </Route>
-        <Route path="/style-guide" component={StyleGuidePage} />
-      </Switch>
-    </>
+    <div className="fixed inset-0 overflow-hidden bg-paper z-999">
+      <NotFoundPage />
+    </div>
   )
 }
 

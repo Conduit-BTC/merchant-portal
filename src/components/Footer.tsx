@@ -215,6 +215,36 @@ const legalLinks = [
 
 const Footer = () => {
   return (
+    <footer>
+      <PageSection width="narrow">
+        <div className="border-t border-muted py-8 flex flex-col md:flex-row justify-between items-center">
+          <div className="legal flex items-center flex-wrap gap-4">
+            <span className="voice-sm text-muted-foreground">
+              © 2025 Conduit. All rights restored.
+            </span>
+            {legalLinks.map((link) => (
+              <React.Fragment key={link.name}>
+                <span className="text-base-400">|</span>
+                <Button
+                  variant="link"
+                  size="sm"
+                  isLink
+                  to={link.link}
+                  rounded={false}
+                >
+                  {link.name}
+                </Button>
+              </React.Fragment>
+            ))}
+          </div>
+        </div>
+      </PageSection>
+    </footer>
+  )
+}
+
+const ExpandedFooter = () => {
+  return (
     <footer className="bg-paper overflow-hidden mt-10">
       <PageSection>
         <div className=" pt-12 grid gap-8 grid-cols-[repeat(auto-fill,minmax(200px,1fr))]">
@@ -247,7 +277,7 @@ const Footer = () => {
         <div className="border-t border-muted py-8 flex flex-col md:flex-row justify-between items-center">
           <div className="legal flex items-center flex-wrap gap-4">
             <span className="voice-sm text-muted-foreground">
-              © 2025 Conduit. All rights reserved.
+              © 2025 Conduit. All rights restored.
             </span>
             {legalLinks.map((link) => (
               <React.Fragment key={link.name}>
