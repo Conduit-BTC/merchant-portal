@@ -2,6 +2,8 @@ FROM oven/bun:1.1.9-alpine AS builder
 
 WORKDIR /app
 
+COPY . .
+
 RUN bun install
 RUN bun run build
 
