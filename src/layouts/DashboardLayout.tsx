@@ -20,6 +20,7 @@ import Header from '@/components/Header'
 import { useState } from 'react'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import Button from '@/components/Buttons/Button'
+import Footer from '@/components/Footer'
 
 // Navigation data for merchant portal
 const navData = [
@@ -95,7 +96,12 @@ function SimpleSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               {pinnedItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <Button to={item.url} variant="link" isLink className="text-left justify-start">
+                    <Button
+                      to={item.url}
+                      variant="link"
+                      isLink
+                      className="text-left justify-start"
+                    >
                       <item.icon className="shrink-0" />
                       <span>{item.title}</span>
                     </Button>
@@ -126,7 +132,12 @@ function SimpleSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 {group.items.map((item) => (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton asChild>
-                      <Button to={item.url} variant="link" isLink className="text-left justify-start">
+                      <Button
+                        to={item.url}
+                        variant="link"
+                        isLink
+                        className="text-left justify-start"
+                      >
                         <item.icon className="shrink-0" />
                         <span>{item.title}</span>
                       </Button>
@@ -300,6 +311,7 @@ export default function DashboardLayout({
             <SidebarTrigger className="-ml-1" />
           </header>
           {children}
+          <Footer />
         </SidebarInset>
       </SidebarProvider>
     </>

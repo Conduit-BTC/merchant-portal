@@ -29,7 +29,9 @@ const Logo: React.FC<LogoProps> = ({ variant = 'full', className }) => {
       <picture className={cn('', className)}>
         <img src={logoSrc} alt="Logo" />
       </picture>
-      <p className="font-bold font-display text-4xl border-l border-primary-foreground pl-2">market</p>
+      <p className="font-bold font-display text-4xl border-l border-primary-foreground pl-2">
+        merchant
+      </p>
     </Link>
   )
 }
