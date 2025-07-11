@@ -1,15 +1,11 @@
-import ShippingOptionItem from '@/layouts/store/shipping/ShippingOptionItem'
 import { useShippingOptionStore } from '@/stores/useShippingOptionStore'
 import {
-  ShippingOption,
   ShippingOptionUtils as SOU,
-  validateShippingOption
 } from 'nostr-commerce-schema'
 import { useEffect } from 'preact/hooks'
 import { FormState } from '.'
 import { useAccountStore } from '@/stores/useAccountStore'
-// import { fetchReferencedEvent } from "@/utils/shippingUtils";
-// import { NDKEvent } from "@nostr-dev-kit/ndk";
+import Field from '@/components/Form/Field'
 
 const ShippingTab = ({
   formData,
@@ -29,55 +25,46 @@ const ShippingTab = ({
     console.log(formData)
   }, [formData])
 
-  const addOption = (ref: string) => {
-    const alreadyExists = formData.shippingOptions.some(
-      (o: any) => o.reference === ref
-    )
-    if (!alreadyExists) {
-      setFormData((prev: any) => ({
-        ...prev,
-        shippingOptions: [...prev.shippingOptions, { reference: ref }]
-      }))
+  // Convert shipping options to format needed for Field component
+  const shippingOptionsList = [...shippingOptions.values()].map((event) => {
+    const ref = `30406:${user!.pubkey}:${SOU.getShippingOptionId(event)}`
+    const label =
+      SOU.getShippingOptionTitle(event) +
+        ' - ' +
+        SOU.getShippingOptionPriceAmount(event) +
+        ' ' +
+        SOU.getShippingOptionPriceCurrency(event) +
+        ' - ' +
+        SOU.getShippingOptionCountries(event) || 'Untitled Option'
+    return {
+      label: label,
+      value: ref
     }
-  }
+  })
 
-  const removeOption = (ref: string) => {
+  const handleShippingOptionsChange = (event: {
+    target: { name: string; value: string | string[] }
+  }) => {
+    const selectedOptions = Array.isArray(event.target.value)
+      ? event.target.value
+      : []
     setFormData((prev: any) => ({
       ...prev,
-      shippingOptions: prev.shippingOptions.filter(
-        (o: any) => o.reference !== ref
-      )
+      shippingOptions: selectedOptions.map((ref) => ({ reference: ref }))
     }))
-  }
-
-  const isOptionSelected = (ref: string) => {
-    return formData.shippingOptions.some((o: any) => o.reference === ref)
   }
 
   return (
     <div className="space-y-6">
       <h3>Available Options</h3>
-      {[...shippingOptions.values()].map((event) => {
-        const ref = `30406:${user!.pubkey}:${SOU.getShippingOptionId(event)}`
-        const isSelected = isOptionSelected(ref)
-
-        return (
-          <div
-            id={SOU.getShippingOptionId(event)!}
-            className={`cursor-pointer ${isSelected ? 'bg-green-500/50' : ''}`}
-            onClick={() => {
-              isSelected ? removeOption(ref) : addOption(ref)
-            }}
-          >
-            <ShippingOptionItem
-              event={event}
-              onEdit={(e: ShippingOption) => {
-                console.log(JSON.stringify(e))
-              }}
-            />
-          </div>
-        )
-      })}
+      <Field
+        type="tags"
+        name="shippingOptions"
+        placeholder="Select shipping options..."
+        options={shippingOptionsList}
+        value={formData.shippingOptions.map((o) => o.reference)}
+        onChange={handleShippingOptionsChange}
+      />
     </div>
   )
 }

@@ -19,6 +19,7 @@ interface ProductFormProps {
   mode: 'create' | 'edit'
   onSubmit: (tags: string[][], content: string) => Promise<void>
   onCancel: () => void
+  disabled?: boolean
 }
 
 export interface FormState {
@@ -95,7 +96,8 @@ const ProductForm: React.FC<ProductFormProps> = ({
   event,
   onSubmit,
   onCancel,
-  mode
+  mode,
+  disabled = false
 }) => {
   const { user } = useAccountStore()
   if (!user) throw new Error('[ProductForm]: Not logged in!')
@@ -323,29 +325,36 @@ const ProductForm: React.FC<ProductFormProps> = ({
           <Icon.X />
         </Button>
       </div>
-      <h2 className="attention-voice">
-        {mode === 'edit' ? 'Edit Product' : 'Create New Product'}
+      <h2 className="attention-voice flex items-center gap-2 mb-8">
+        {mode === 'edit' ? 'Edit Product' : 'Create New Product'} 
+		  
+		  <Button variant="link" size="icon" className="flex items-center gap-2" onClick={() => navigator.clipboard.writeText(formData.id)}>
+		  <code className="solid-voice inline-block my-2">
+			{formData.id.substring(0, 8)}...{formData.id.substring(formData.id.length - 8)}
+			
+			</code>
+				<Icon.Copy className="size-4"  />
+			
+			</Button>
+		  
+
       </h2>
 
-      <code className="solid-voice inline-block my-2">{formData.id}</code>
-
+      <div className="border-primary-800  border rounded-lg bg-muted/10 ">
       <Tabs value={currentTab} onValueChange={setCurrentTab}>
-        <TabsList className="mb-6">
+        <TabsList className="bg-muted/40 rounded-t-lg overflow-hidden">
           {tabOrder.map((tab) => (
             <TabsTrigger
               key={tab}
               value={tab}
-              className={cn(
-                'voice-sm capitalize',
-                currentTab === tab && 'text-primary-500  font-bold underline'
-              )}
+              
             >
               {tab}
             </TabsTrigger>
           ))}
         </TabsList>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className={cn( 'p-4', disabled && 'opacity-50 pointer-events-none')}>
           <TabsContent value="basic">
             <BasicTab
               formData={formData}
@@ -421,6 +430,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
           </div>
         </form>
       </Tabs>
+      </div>
     </div>
   )
 }

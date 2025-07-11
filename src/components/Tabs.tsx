@@ -65,7 +65,7 @@ function TabsList({ className, children, ...props }: TabsListProps) {
     <div
       role="tablist"
       className={cn(
-        'flex items-center relative flex-wrap gap-2 gap-y-4',
+        'flex items-center relative flex-wrap',
         className
       )}
       {...props}
@@ -96,9 +96,9 @@ function TabsTrigger({
       aria-selected={isSelected}
       onClick={handleClick}
       className={cn(
-        'voice-sm font-normal whitespace-nowrap px-3 py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:border-accent hover:text-accent',
+        'voice-sm font-normal capitalize whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent p-4 flex-1',
         className,
-        isSelected && 'font-bold data-[state=active]:font-bold border-primary',
+        isSelected && 'bg-primary text-primary-foreground',
         isSelected && isSelectedClassName
       )}
       {...props}
