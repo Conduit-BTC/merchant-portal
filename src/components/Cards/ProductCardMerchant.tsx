@@ -15,19 +15,21 @@ import {
 import { Star } from 'lucide-react'
 import { Badge } from '@/components/Badge.tsx'
 import { cn, formatPrice } from '@/lib/utils.ts'
-import Button from "@/components/Buttons/Button"
-import { DeleteIcon, EditIcon } from "@/assets/images/icons/icons";
+import Button from '@/components/Buttons/Button'
+import { DeleteIcon, EditIcon } from '@/assets/images/icons/icons'
 
 const PLACEHOLDER_IMAGE = 'https://prd.place/600/400'
 
 interface ProductCardProps {
-  event: ProductListing;
-  onEdit: (event: ProductListing) => void;
-  onDelete: (id: string) => void;
+  event: ProductListing
+  onEdit: (event: ProductListing) => void
+  onDelete: (id: string) => void
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
-  event, onEdit, onDelete
+  event,
+  onEdit,
+  onDelete
 }) => {
   // #todo: remove this once we have a real event
 
@@ -57,7 +59,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const [imageError, setImageError] = useState(false)
 
   // Use schema functions to extract data
-  const id = ProductListingUtils.getProductId(event);
+  const id = ProductListingUtils.getProductId(event)
   const title = ProductListingUtils.getProductTitle(productEvent)
   const price = ProductListingUtils.getProductPrice(productEvent)
   const images = ProductListingUtils.getProductImages(productEvent)
@@ -106,18 +108,14 @@ const ProductCard: React.FC<ProductCardProps> = ({
   }
 
   const handleEdit = () => {
-    onEdit(event);
-  };
+    onEdit(event)
+  }
 
   const handleDelete = () => {
-    if (
-      id &&
-      window.confirm("Are you sure you want to delete this product?")
-    ) {
-      onDelete(id);
+    if (id && window.confirm('Are you sure you want to delete this product?')) {
+      onDelete(id)
     }
-  };
-
+  }
 
   return (
     <Card
@@ -135,12 +133,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         </div>
 
         {/* image */}
-        <picture
-          className={cn(
-            'bg-ink',
-            'aspect-video'
-          )}
-        >
+        <picture className={cn('bg-ink', 'aspect-video')}>
           <img
             src={mainImage}
             alt={title}
@@ -151,9 +144,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         </picture>
       </div>
       <CardHeader className="flex gap-1 items-start justify-between">
-        <CardTitle className={cn('line-clamp-2')}>
-          {title}
-        </CardTitle>
+        <CardTitle className={cn('line-clamp-2')}>{title}</CardTitle>
 
         {/* rating */}
         <div className="flex items-center gap-1">
@@ -175,15 +166,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
         {/* in Satoshis */}
         <div className="flex items-center gap-1">
-          <p className={cn('firm-voice font-bold')}>
-            {discountedPrice} SAT
-          </p>
+          <p className={cn('firm-voice font-bold')}>{discountedPrice} SAT</p>
           {isOnSale && (
-            <p
-              className={cn(
-                'text-base-600 line-through notice-voice'
-              )}
-            >
+            <p className={cn('text-base-600 line-through notice-voice')}>
               {originalPrice}
             </p>
           )}
@@ -198,16 +183,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
           )}
         </div>
         <div className="flex">
-          <Button
-            size="sm"
-            onClick={handleEdit}
-          >
+          <Button size="sm" onClick={handleEdit}>
             <EditIcon className="w-4 h-4 mr-2" />
           </Button>
-          <Button
-            size="sm"
-            onClick={handleDelete}
-          >
+          <Button size="sm" onClick={handleDelete}>
             <DeleteIcon className="w-4 h-4 mr-2" />
           </Button>
         </div>
