@@ -37,6 +37,8 @@ import {
   Share,
   Landmark,
   Home,
+  Shield,
+  Pin,
   MessageCircle
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -122,7 +124,9 @@ const Icon = {
   Landmark: createIconComponent(Landmark),
   Home: createIconComponent(Home),
   MessageCircle: createIconComponent(MessageCircle),
-  Satoshi: createIconComponent(SatoshiIcon)
+  Satoshi: createIconComponent(SatoshiIcon),
+  Shield: createIconComponent(Shield),
+  Pin: createIconComponent(Pin)
 }
 
 export default Icon
