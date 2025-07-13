@@ -5,6 +5,7 @@ import { useProductStore } from '@/stores/useProductStore'
 import { ProductListing } from 'nostr-commerce-schema'
 import { v4 as uuidv4 } from 'uuid'
 import PageSection from '../PageSection'
+import Button from '@/components/Buttons/Button'
 
 const useSampleProduct = () => {
   const id = `product_id_${uuidv4()}`
@@ -78,15 +79,16 @@ const ProductCreateLayout: React.FC = () => {
 
   return (
     <PageSection>
-      <div className="flex justify-between items-center mb-4">
-        <button
+      <div className="flex justify-between items-center">
+        <Button
           onClick={handleFillSample}
-          className="btn-secondary"
           disabled={submitting}
-          style={'background: red'}
+          size="sm"
+          variant="outline"
+          className="border-secondary"
         >
           Fill with Sample Data
-        </button>
+        </Button>
       </div>
 
       <ProductForm
